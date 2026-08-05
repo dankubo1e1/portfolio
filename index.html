@@ -22,16 +22,6 @@
             font-family: 'Inter', 'Noto Sans JP', sans-serif;
         }
 
-        /* ----------------------------------------------------
-           1. 背景用画像の設定 (img/ フォルダ指定) & ブラーマスク
-        ---------------------------------------------------- */
-        .bg-artist-image {
-            /* ★ img フォルダ内の背景画像を相対パスで指定 */
-            background-image: url('img/bg-artist.jpg');
-            background-size: cover;
-            background-position: center;
-        }
-
         /* Darkモード時の上下フェード＆ブラーマスク */
         .dark .bg-overlay {
             background: linear-gradient(
@@ -62,8 +52,12 @@
 <body id="body" class="dark bg-[#0a0a0a] text-neutral-200 transition-colors duration-300 min-h-screen flex flex-col justify-between selection:bg-neutral-800 selection:text-white relative overflow-x-hidden">
 
     <!-- 背景：過去のアー写 ＋ グラデーションブラーフィルター -->
-    <div class="fixed inset-0 bg-artist-image z-0 scale-105 transform"></div>
-    <div class="fixed inset-0 bg-overlay z-0"></div>
+    <!-- インラインスタイルで確実にパスを適用 -->
+    <div 
+        class="fixed inset-0 bg-cover bg-center z-0 scale-105 transform pointer-events-none" 
+        style="background-image: url('img/bg-artist.jpg');"
+    ></div>
+    <div class="fixed inset-0 bg-overlay z-0 pointer-events-none"></div>
 
     <!-- コンテンツ全体（背景の上層） -->
     <div class="relative z-10 flex flex-col min-h-screen justify-between">
@@ -90,12 +84,16 @@
         </header>
 
         <!-- メインコンテンツ -->
-        <main class="w-full max-w-3xl mx-auto px-6 py-12 flex-grow flex flex-col justify-center">
+        <main class="w-full max-w-xl mx-auto px-6 py-12 flex-grow flex flex-col justify-center">
             
-            <!-- アーティスト メイン画像（前面） -->
-            <div class="mb-10 w-full overflow-hidden rounded-lg shadow-2xl border border-white/10 dark:border-white/10">
-                <!-- ★ img フォルダ内のメインアー写を指定 -->
-                <img src="img/main-artist.jpg" alt="Dan Kubo / 1e1" class="w-full h-64 md:h-96 object-cover object-center" loading="eager">
+            <!-- アーティスト メイン画像（前面：スクエア比率 ＆ 上部基準で下部をクロップ） -->
+            <div class="mb-10 w-full aspect-square overflow-hidden rounded-lg shadow-2xl border border-white/10 dark:border-white/10">
+                <img 
+                    src="img/main-artist.jpg" 
+                    alt="Dan Kubo / 1e1" 
+                    class="w-full h-full object-cover object-[center_top]" 
+                    loading="eager"
+                >
             </div>
 
             <!-- 名前 & タイトル -->
@@ -225,7 +223,6 @@
                 lightBtn.className = "font-medium transition text-neutral-900 border-b border-neutral-900 pb-0.5";
                 darkBtn.className = "font-medium transition text-neutral-500 hover:text-neutral-900";
 
-                // 言語ボタンの文字色調整
                 if (isJaActive) {
                     btnJa.className = "text-neutral-900 border-b border-neutral-900 pb-0.5 transition font-medium";
                     btnEn.className = "text-neutral-500 hover:text-neutral-900 transition font-medium";
@@ -240,7 +237,6 @@
                 darkBtn.className = "font-medium transition text-white border-b border-white pb-0.5";
                 lightBtn.className = "font-medium transition text-neutral-500 hover:text-white";
 
-                // 言語ボタンの文字色調整
                 if (isJaActive) {
                     btnJa.className = "text-white border-b border-white pb-0.5 transition font-medium";
                     btnEn.className = "text-neutral-500 hover:text-white transition font-medium";
