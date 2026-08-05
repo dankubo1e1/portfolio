@@ -23,11 +23,11 @@
         }
 
         /* ----------------------------------------------------
-           1. 背景用画像の設定 & 上下グラデーションブラー
+           1. 背景用画像の設定 (img/ フォルダ指定) & ブラーマスク
         ---------------------------------------------------- */
         .bg-artist-image {
-            /* ★【背景用】過去のアー写画像URLを指定してください */
-            background-image: url('BACKGROUND_IMAGE_URL.jpg');
+            /* ★ img フォルダ内の背景画像を相対パスで指定 */
+            background-image: url('img/bg-artist.jpg');
             background-size: cover;
             background-position: center;
         }
@@ -94,8 +94,8 @@
             
             <!-- アーティスト メイン画像（前面） -->
             <div class="mb-10 w-full overflow-hidden rounded-lg shadow-2xl border border-white/10 dark:border-white/10">
-                <!-- ★【前面用】メインのアー写画像URLを指定してください -->
-                <img src="MAIN_ARTIST_IMAGE_URL.jpg" alt="Dan Kubo / 1e1" class="w-full h-64 md:h-96 object-cover object-center" loading="eager">
+                <!-- ★ img フォルダ内のメインアー写を指定 -->
+                <img src="img/main-artist.jpg" alt="Dan Kubo / 1e1" class="w-full h-64 md:h-96 object-cover object-center" loading="eager">
             </div>
 
             <!-- 名前 & タイトル -->
@@ -160,11 +160,11 @@
                 <div>
                     <h2 class="text-xs uppercase tracking-widest text-neutral-500 mb-4 font-semibold">Social</h2>
                     <div class="flex items-center space-x-5">
-                        <!-- Instagram -->
+                        <!-- 1. Instagram -->
                         <a href="https://www.instagram.com/dan1e1/" target="_blank" rel="noopener noreferrer" class="text-neutral-600 dark:text-neutral-400 hover:text-black dark:hover:text-white text-xl transition flex items-center justify-center w-6 h-6" title="Instagram">
                             <i class="fa-brands fa-instagram"></i>
                         </a>
-                        <!-- X (Twitter) -->
+                        <!-- 2. X (Twitter) -->
                         <a href="https://x.com/KuboDan" target="_blank" rel="noopener noreferrer" class="text-neutral-600 dark:text-neutral-400 hover:text-black dark:hover:text-white text-xl transition flex items-center justify-center w-6 h-6" title="X (Twitter)">
                             <i class="fa-brands fa-x-twitter"></i>
                         </a>
@@ -271,7 +271,7 @@
                 profEn.classList.add('hidden');
                 profJa.classList.remove('hidden');
                 btnJa.className = activeClass;
-                btnJa.className = inactiveClass;
+                btnEn.className = inactiveClass;
             }
         }
 
