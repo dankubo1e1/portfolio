@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dan Kubo / 1e1</title>
-    <!-- Tailwind CSS (デザイン用) -->
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             darkMode: 'class',
         }
     </script>
-    <!-- FontAwesome (アイコン用) -->
+    <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -40,15 +40,15 @@
             mask-image: linear-gradient(
                 to bottom,
                 transparent 0px,
-                transparent var(--fade-top, 0px),
-                black var(--fade-bottom, 0px),
+                transparent var(--fade-top, -50px),
+                black var(--fade-bottom, -10px),
                 black 100%
             );
             -webkit-mask-image: linear-gradient(
                 to bottom,
                 transparent 0px,
-                transparent var(--fade-top, 0px),
-                black var(--fade-bottom, 0px),
+                transparent var(--fade-top, -50px),
+                black var(--fade-bottom, -10px),
                 black 100%
             );
         }
@@ -66,36 +66,36 @@
     <!-- コンテンツ全体 -->
     <div class="relative z-10 flex flex-col min-h-screen justify-between">
 
-        <!-- ヘッダー / 言語切り替えのみ（右寄せ） -->
-        <header class="w-full max-w-5xl mx-auto px-6 pt-6 pb-2 flex justify-end items-center relative z-40">
-            <div class="flex space-x-2 text-xs tracking-wider bg-neutral-900/40 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/5">
-                <button id="btn-ja" onclick="setLanguage('ja')" class="text-white border-b border-white pb-0.5 transition font-medium">JP</button>
-                <span class="text-neutral-600">/</span>
-                <button id="btn-en" onclick="setLanguage('en')" class="text-neutral-500 hover:text-white transition font-medium">EN</button>
-            </div>
-        </header>
-
         <!-- メインコンテンツ -->
         <main class="w-full max-w-5xl mx-auto px-6 py-2 flex-grow">
             
-            <!-- 1. アーティスト名 & 肩書（Sticky固定領域） -->
-            <!-- mb-12 md:mb-16 で余白2（名前と本文の距離）をしっかりと広く確保 -->
-            <div id="artist-header" class="sticky top-0 z-30 pt-2 pb-4 mb-12 md:mb-16 bg-transparent pointer-events-none">
-                <div class="pointer-events-auto">
-                    <h1 class="text-3xl md:text-5xl font-light tracking-tight text-white mb-2 drop-shadow-md">
-                        Dan Kubo <span class="text-neutral-500 font-extralight">/ 1e1</span>
-                    </h1>
-                    <p class="text-sm md:text-base text-neutral-400 font-light tracking-wide drop-shadow">
-                        Artist / Composer / Producer
-                    </p>
+            <!-- アーティスト名 ＆ 言語切り替え（Sticky固定領域） -->
+            <div id="artist-header" class="sticky top-4 md:top-6 z-30 pt-2 pb-2 mb-10 md:mb-12 bg-transparent pointer-events-none">
+                <div class="pointer-events-auto flex justify-between items-start">
+                    <!-- アーティスト名 & 肩書 -->
+                    <div>
+                        <h1 class="text-3xl md:text-5xl font-light tracking-tight text-white mb-1.5 drop-shadow-md">
+                            Dan Kubo <span class="text-neutral-500 font-extralight">/ 1e1</span>
+                        </h1>
+                        <p class="text-sm md:text-base text-neutral-400 font-light tracking-wide drop-shadow">
+                            Artist / Composer / Producer
+                        </p>
+                    </div>
+
+                    <!-- 言語切り替え -->
+                    <div class="flex space-x-2 text-xs tracking-wider bg-neutral-900/40 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/5 mt-2.5">
+                        <button id="btn-ja" onclick="setLanguage('ja')" class="text-white border-b border-white pb-0.5 transition font-medium">JP</button>
+                        <span class="text-neutral-600">/</span>
+                        <button id="btn-en" onclick="setLanguage('en')" class="text-neutral-500 hover:text-white transition font-medium">EN</button>
+                    </div>
                 </div>
             </div>
 
-            <!-- 2. コンテンツエリア -->
+            <!-- コンテンツエリア -->
             <div class="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 items-start">
                 
-                <!-- 左側：プロフィール本文 ＋ リンク（動的フェードアウト対象） -->
-                <div id="fade-content" class="md:col-span-7 flex flex-col text-left">
+                <!-- 左側：プロフィール本文 ＋ リンク -->
+                <div id="fade-content" class="md:col-span-7 flex flex-col text-left dynamic-fade-mask">
                     
                     <!-- スマホのみ表示されるアー写 -->
                     <div class="block md:hidden mb-8 w-full aspect-square overflow-hidden rounded-2xl relative">
@@ -117,7 +117,7 @@
                             <p>2024年8月14日、2nd EP「Asymptote」をリリース。</p>
                         </div>
 
-                        <!-- 英語プロフ (初期状態は非表示) -->
+                        <!-- 英語プロフ -->
                         <div id="prof-en" class="space-y-4 text-neutral-300 text-sm md:text-base leading-relaxed font-light hidden">
                             <p>1e1 (pronounced "jəl") is a solo project by Dan Kubo, a musician and producer based in Tokyo. He creates music that combines mainly hip-hop and R&B, with sounds that use his own compositional techniques in acousmatic music, which is considered a branch of contemporary music.</p>
                             <p>He released his first EP, "Quartier Latin," on October 31, 2018. Each release has been supported by many artists, and his first album, "Cryptobiosis," released in October 2020, was nominated for the Record of the Year Award selected by Seiho on the web media "Mastered."</p>
@@ -144,10 +144,6 @@
                                     <i class="fa-solid fa-music text-sm text-neutral-500"></i>
                                     <span>Other Streaming Services</span>
                                 </a>
-                                <a href="https://soundcloud.com/dankubo" target="_blank" rel="noopener noreferrer" class="flex items-center space-x-2 bg-neutral-900/40 backdrop-blur border border-neutral-800/80 hover:border-neutral-600 px-3.5 py-2 rounded-full text-xs text-neutral-300 hover:text-white transition shadow-sm">
-                                    <i class="fa-brands fa-soundcloud text-sm text-orange-500"></i>
-                                    <span>SoundCloud</span>
-                                </a>
                             </div>
                         </div>
 
@@ -161,14 +157,17 @@
                                 <a href="https://x.com/KuboDan" target="_blank" rel="noopener noreferrer" class="text-neutral-400 hover:text-white text-lg transition" title="X (Twitter)">
                                     <i class="fa-brands fa-x-twitter"></i>
                                 </a>
+                                <a href="https://soundcloud.com/dankubo" target="_blank" rel="noopener noreferrer" class="text-neutral-400 hover:text-white text-lg transition" title="SoundCloud">
+                                    <i class="fa-brands fa-soundcloud"></i>
+                                </a>
                             </div>
                         </div>
                     </section>
 
                 </div>
 
-                <!-- 右側：PC用アー写（フェードマスク対象外 / Sticky固定でスタック） -->
-                <div class="hidden md:block md:col-span-5 sticky top-28">
+                <!-- 右側：PC用アー写 -->
+                <div class="hidden md:block md:col-span-5 sticky top-36">
                     <div class="w-full aspect-square overflow-hidden rounded-2xl relative group">
                         <div class="absolute inset-0 bg-neutral-500/10 backdrop-blur-md rounded-2xl"></div>
                         <img 
@@ -189,7 +188,7 @@
             <div class="max-w-5xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
                 
                 <div class="text-xs text-neutral-600">
-                    &copy; Dan Kubo / 1e1. All rights reserved.
+                    &copy; Dan Kubo. All rights reserved.
                 </div>
 
                 <!-- CW閲覧用フォーム -->
@@ -216,9 +215,8 @@
 
     </div>
 
-    <!-- JavaScript (言語切り替え & 認証 & スクロールフェード計算) -->
+    <!-- JavaScript -->
     <script>
-        // スクロールに応じたフェードマスク位置のリアルタイム計算
         function updateScrollFade() {
             const header = document.getElementById('artist-header');
             const fadeContent = document.getElementById('fade-content');
@@ -230,21 +228,12 @@
             const headerBottom = headerRect.bottom;
             const contentTop = contentRect.top;
 
-            // --- 調整パラメーター ---
-            const fadeStartOffset = 8;  // 名前の直下 8px の地点で完全透明（消滅）
-            const fadeRange = 24;       // グラデーション幅を24pxに急傾斜化（余白2の中で一瞬で消える）
+            const fadeStartOffset = 12;  
+            const fadeRange = 20;       
 
-            // 本文の上端が「フェード領域（名前の下端 + 32px）」よりも下にある間は、一切マスクをかけない（100%くっきり表示）
-            if (contentTop > headerBottom + fadeStartOffset + fadeRange) {
-                fadeContent.classList.remove('dynamic-fade-mask');
-                return;
-            }
-
-            // フェード領域に入った瞬間のみマスクを計算して適用
-            const relativeFadeTop = Math.max(0, headerBottom - contentTop + fadeStartOffset);
+            const relativeFadeTop = headerBottom - contentTop + fadeStartOffset;
             const relativeFadeBottom = relativeFadeTop + fadeRange;
 
-            fadeContent.classList.add('dynamic-fade-mask');
             fadeContent.style.setProperty('--fade-top', `${relativeFadeTop}px`);
             fadeContent.style.setProperty('--fade-bottom', `${relativeFadeBottom}px`);
         }
