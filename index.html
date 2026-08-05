@@ -35,20 +35,20 @@
             -webkit-backdrop-filter: blur(24px);
         }
 
-        /* スクロール時にアーティスト名の下で本文を滑らかに消失させるグラデーションマスク */
-        .scroll-fade-mask {
+        /* 本文エリア専用の可変フェードマスク */
+        .dynamic-fade-mask {
             mask-image: linear-gradient(
                 to bottom,
                 transparent 0px,
-                transparent 120px,
-                black 180px,
+                transparent var(--fade-top, 0px),
+                black var(--fade-bottom, 0px),
                 black 100%
             );
             -webkit-mask-image: linear-gradient(
                 to bottom,
                 transparent 0px,
-                transparent 120px,
-                black 180px,
+                transparent var(--fade-top, 0px),
+                black var(--fade-bottom, 0px),
                 black 100%
             );
         }
@@ -78,8 +78,8 @@
         <!-- メインコンテンツ -->
         <main class="w-full max-w-5xl mx-auto px-6 py-4 md:py-8 flex-grow">
             
-            <!-- 1. アーティスト名 & 肩書（矩形ブラーを排除し完全透過でフロート固定） -->
-            <div class="sticky top-0 z-30 pt-4 pb-4 mb-2 bg-transparent pointer-events-none">
+            <!-- 1. アーティスト名 & 肩書（Sticky固定領域） -->
+            <div id="artist-header" class="sticky top-0 z-30 pt-4 pb-4 mb-2 bg-transparent pointer-events-none">
                 <div class="pointer-events-auto">
                     <h1 class="text-3xl md:text-5xl font-light tracking-tight text-white mb-2 drop-shadow-md">
                         Dan Kubo <span class="text-neutral-500 font-extralight">/ 1e1</span>
@@ -90,11 +90,11 @@
                 </div>
             </div>
 
-            <!-- 2. コンテンツエリア（上部へスクロールした際に自動でフェードアウト） -->
-            <div class="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 items-start scroll-fade-mask pt-6">
+            <!-- 2. コンテンツエリア -->
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 items-start pt-2">
                 
-                <!-- 左側：スマホ用アー写 ＋ プロフィール本文 ＋ リンク -->
-                <div class="md:col-span-7 flex flex-col text-left">
+                <!-- 左側：プロフィール本文 ＋ リンク（動的フェードアウト対象） -->
+                <div id="fade-content" class="md:col-span-7 flex flex-col text-left dynamic-fade-mask">
                     
                     <!-- スマホのみ表示されるアー写 -->
                     <div class="block md:hidden mb-8 w-full aspect-square overflow-hidden rounded-2xl relative">
@@ -166,8 +166,8 @@
 
                 </div>
 
-                <!-- 右側：PC用アー写 -->
-                <div class="hidden md:block md:col-span-5 sticky top-32">
+                <!-- 右側：PC用アー写（フェードマスク対象外 / Sticky固定でスタック） -->
+                <div class="hidden md:block md:col-span-5 sticky top-36">
                     <div class="w-full aspect-square overflow-hidden rounded-2xl relative group">
                         <div class="absolute inset-0 bg-neutral-500/10 backdrop-blur-md rounded-2xl"></div>
                         <img 
@@ -215,8 +215,31 @@
 
     </div>
 
-    <!-- JavaScript (言語切り替え & 認証ロジック) -->
+    <!-- JavaScript (言語切り替え & 認証 & スクロールフェード計算) -->
     <script>
+        // スクロールに応じたフェードマスク位置のリアルタイム計算
+        function updateScrollFade() {
+            const header = document.getElementById('artist-header');
+            const fadeContent = document.getElementById('fade-content');
+            if (!header || !fadeContent) return;
+
+            const headerRect = header.getBoundingClientRect();
+            const contentRect = fadeContent.getBoundingClientRect();
+
+            // アーティスト名の下端Y座標からグラデーション領域を算出
+            const headerBottom = headerRect.bottom;
+            const relativeFadeTop = Math.max(0, headerBottom - contentRect.top - 20);
+            const relativeFadeBottom = Math.max(0, headerBottom - contentRect.top + 30);
+
+            fadeContent.style.setProperty('--fade-top', `${relativeFadeTop}px`);
+            fadeContent.style.setProperty('--fade-bottom', `${relativeFadeBottom}px`);
+        }
+
+        window.addEventListener('scroll', updateScrollFade, { passive: true });
+        window.addEventListener('resize', updateScrollFade);
+        document.addEventListener('DOMContentLoaded', updateScrollFade);
+
+        // 言語切り替えロジック
         function setLanguage(lang) {
             const profJa = document.getElementById('prof-ja');
             const profEn = document.getElementById('prof-en');
@@ -237,8 +260,10 @@
                 btnJa.className = activeClass;
                 btnEn.className = inactiveClass;
             }
+            updateScrollFade();
         }
 
+        // 認証ロジック
         function handleLogin(e) {
             e.preventDefault();
             const inputPass = document.getElementById('cw-password').value;
