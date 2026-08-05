@@ -1,107 +1,281 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- 検索エンジンに登録させないためのタグ -->
-    <meta name="robots" content="noindex, nofollow">
-    <title>Dan Kubo - Client Work Portfolio</title>
+    <title>Client Works 2026.1H | Dan Kubo</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+        }
+    </script>
     <!-- FontAwesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Noto+Sans+JP:wght@300;400;500&display=swap" rel="stylesheet">
+
     <style>
         body {
             font-family: 'Inter', 'Noto Sans JP', sans-serif;
-            background-color: #0a0a0a;
-            color: #e5e5e5;
+        }
+
+        .bg-overlay {
+            background: linear-gradient(
+                to bottom,
+                #0a0a0a 0%,
+                rgba(10, 10, 10, 0.75) 20%,
+                rgba(10, 10, 10, 0.75) 80%,
+                #0a0a0a 100%
+            );
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+        }
+
+        .embed-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            width: 100%;
+            background: #121212;
+        }
+        .embed-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
         }
     </style>
+
+    <!-- 認証チェック -->
+    <script>
+        if (sessionStorage.getItem('cw_auth') !== 'true') {
+            window.location.href = 'index.html';
+        }
+    </script>
 </head>
-<body class="min-h-screen flex flex-col justify-between selection:bg-neutral-800 selection:text-white">
+<body class="dark bg-[#0a0a0a] text-neutral-200 min-h-screen flex flex-col justify-between selection:bg-neutral-800 selection:text-white relative overflow-x-hidden">
 
-    <!-- ヘッダー -->
-    <header class="w-full max-w-5xl mx-auto px-6 py-8 flex justify-between items-center border-b border-neutral-900">
-        <div>
-            <span class="text-xs tracking-widest uppercase text-neutral-500 block mb-1">Portfolio</span>
-            <h1 class="text-lg font-light text-white">Dan Kubo / Client Works</h1>
-        </div>
-        <div>
-            <!-- AA公式へのリンク（別タブで開くため閲覧中のPFが閉じない） -->
-            <a href="index.html" target="_blank" rel="noopener noreferrer" class="text-xs text-neutral-500 hover:text-neutral-300 transition flex items-center gap-1.5">
-                <span>Official Artist Site</span>
-                <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+    <div 
+        class="fixed inset-0 bg-cover bg-center z-0 scale-105 transform pointer-events-none" 
+        style="background-image: url('img/bg-artist.jpg');"
+    ></div>
+    <div class="fixed inset-0 bg-overlay z-0 pointer-events-none"></div>
+
+    <div class="relative z-10 flex flex-col min-h-screen justify-between">
+
+        <!-- ヘッダー -->
+        <header class="w-full max-w-7xl mx-auto px-6 pt-8 pb-6 flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <a href="index.html" class="text-xl md:text-2xl font-light tracking-tight text-white hover:opacity-80 transition">
+                    Dan Kubo
+                </a>
+                <span class="text-[11px] text-neutral-400 font-mono tracking-widest uppercase border-l border-neutral-700 pl-3">Client Works 2026.1H</span>
+            </div>
+            
+            <a href="index.html" class="text-xs text-neutral-400 hover:text-white transition flex items-center space-x-1">
+                <i class="fa-solid fa-arrow-left text-[10px]"></i>
+                <span>Back to Profile</span>
             </a>
-        </div>
-    </header>
+        </header>
 
-    <!-- メインコンテンツ -->
-    <main class="w-full max-w-5xl mx-auto px-6 py-12 flex-grow">
-        
-        <!-- 案内メッセージ -->
-        <section class="mb-12">
-            <p class="text-sm text-neutral-400 font-light leading-relaxed">
-                映像音楽、WebCM、インスタレーション等の制作実績です。<br>
-                ※守秘義務の関係上、本ページ内の音源・映像の無断転載および第三者への二次共有はご遠慮ください。
-            </p>
-        </section>
+        <!-- メインコンテンツ -->
+        <main class="w-full max-w-7xl mx-auto px-6 py-6 flex-grow">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
 
-        <!-- 作品ギャラリーリスト -->
-        <section class="space-y-12">
-
-            <!-- 【ダミー作品1：オーディオ作品】 -->
-            <div class="bg-neutral-950 border border-neutral-900 rounded-lg p-6 hover:border-neutral-800 transition">
-                <div class="flex flex-col md:flex-row md:items-center justify-between gap-2 mb-4">
+                <!-- 1. Firefox WebCM -->
+                <div class="space-y-2.5">
+                    <div class="relative overflow-hidden rounded-xl border border-neutral-800/80 bg-[#121212]" oncontextmenu="return false;">
+                        <div class="embed-container">
+                            <iframe src="https://drive.google.com/file/d/17fVEUMQCZglovKzI4b4WMWZzCKKtkRDY/preview" allow="autoplay; fullscreen"></iframe>
+                        </div>
+                        <div class="absolute top-0 right-0 w-20 h-12 z-20 bg-transparent"></div>
+                    </div>
                     <div>
-                        <span class="text-[10px] tracking-wider uppercase text-neutral-500 border border-neutral-800 px-2 py-0.5 rounded">Commercial / Audio</span>
-                        <h2 class="text-lg font-normal text-white mt-2">サンプル楽曲タイトル #01 （プロジェクト名等）</h2>
-                    </div>
-                    <div class="text-xs text-neutral-400 font-light">
-                        担当: 作曲 / 編曲 / ミキシング
+                        <h3 class="text-sm font-normal text-white leading-snug">Firefox WebCM</h3>
+                        <p class="text-[11px] text-neutral-400 mt-0.5"><span class="text-neutral-500 uppercase tracking-wider text-[9px] mr-1.5">Role</span>Music</p>
                     </div>
                 </div>
-                <p class="text-xs text-neutral-500 mb-4">作品の概要や演出意図などのメモ（例：ミニマルな電子音響にヒップホップ調のリズムを加えたWebCM用BGM）。</p>
-                
-                <!-- Google Drive等の音源埋め込みプレイヤー枠（ダミー） -->
-                <div class="w-full bg-neutral-900 rounded border border-neutral-800 p-3 flex items-center justify-center">
-                    <audio controls class="w-full h-10">
-                        <source src="" type="audio/mpeg">
-                        お使いのブラウザはオーディオ再生に対応していません。
-                    </audio>
-                </div>
-            </div>
 
-            <!-- 【ダミー作品2：映像＋音楽作品】 -->
-            <div class="bg-neutral-950 border border-neutral-900 rounded-lg p-6 hover:border-neutral-800 transition">
-                <div class="flex flex-col md:flex-row md:items-center justify-between gap-2 mb-4">
+                <!-- 2. unlabel LAB 「限界追及！」編 -->
+                <div class="space-y-2.5">
+                    <div class="relative overflow-hidden rounded-xl border border-neutral-800/80 bg-[#121212]" oncontextmenu="return false;">
+                        <div class="embed-container">
+                            <iframe src="https://drive.google.com/file/d/1KcJddmEP3rqj9Mu3jmuPyi7SS-g8Rp5d/preview" allow="autoplay; fullscreen"></iframe>
+                        </div>
+                        <div class="absolute top-0 right-0 w-20 h-12 z-20 bg-transparent"></div>
+                    </div>
                     <div>
-                        <span class="text-[10px] tracking-wider uppercase text-neutral-500 border border-neutral-800 px-2 py-0.5 rounded">Video / Installation</span>
-                        <h2 class="text-lg font-normal text-white mt-2">サンプル映像タイトル #02</h2>
-                    </div>
-                    <div class="text-xs text-neutral-400 font-light">
-                        担当: 音楽制作 / サウンドデザイン
+                        <h3 class="text-sm font-normal text-white leading-snug">unlabel LAB 「限界追及！」編</h3>
+                        <p class="text-[11px] text-neutral-400 mt-0.5"><span class="text-neutral-500 uppercase tracking-wider text-[9px] mr-1.5">Role</span>Music</p>
                     </div>
                 </div>
-                <p class="text-xs text-neutral-500 mb-4">作品の簡単な補足（例：展示用インスタレーション映像の音響設計）。</p>
-                
-                <!-- 映像埋め込み枠（ダミー） -->
-                <div class="w-full aspect-video bg-neutral-900 rounded border border-neutral-800 flex items-center justify-center text-neutral-600 text-xs">
-                    [ 映像プレイヤー埋め込みエリア（Google Drive / YouTube / Vimeo 等） ]
+
+                <!-- 3. 霞ヶ関キャピタル エントランスムービー -->
+                <div class="space-y-2.5">
+                    <div class="relative overflow-hidden rounded-xl border border-neutral-800/80 bg-[#121212]" oncontextmenu="return false;">
+                        <div class="embed-container">
+                            <iframe src="https://drive.google.com/file/d/1GLb8e929nliraiwwIl71QNm5z737wAUU/preview" allow="autoplay; fullscreen"></iframe>
+                        </div>
+                        <div class="absolute top-0 right-0 w-20 h-12 z-20 bg-transparent"></div>
+                    </div>
+                    <div>
+                        <h3 class="text-sm font-normal text-white leading-snug">霞ヶ関キャピタル エントランスムービー</h3>
+                        <p class="text-[11px] text-neutral-400 mt-0.5"><span class="text-neutral-500 uppercase tracking-wider text-[9px] mr-1.5">Role</span>Music</p>
+                    </div>
                 </div>
+
+                <!-- 4. 電通 dentsu entrance project VERTICAL VISION -->
+                <div class="space-y-2.5">
+                    <div class="relative overflow-hidden rounded-xl border border-neutral-800/80 bg-[#121212]" oncontextmenu="return false;">
+                        <div class="embed-container">
+                            <iframe src="https://drive.google.com/file/d/1GFZ31dQb-HKiZe_C2kN9Ts4KuO_t_IaD/preview" allow="autoplay; fullscreen"></iframe>
+                        </div>
+                        <div class="absolute top-0 right-0 w-20 h-12 z-20 bg-transparent"></div>
+                    </div>
+                    <div>
+                        <h3 class="text-sm font-normal text-white leading-snug">電通 dentsu entrance project VERTICAL VISION</h3>
+                        <p class="text-[11px] text-neutral-400 mt-0.5"><span class="text-neutral-500 uppercase tracking-wider text-[9px] mr-1.5">Role</span>Music</p>
+                    </div>
+                </div>
+
+                <!-- 5. 攻殻機動隊展 展示コンソール -->
+                <div class="space-y-2.5">
+                    <div class="relative overflow-hidden rounded-xl border border-neutral-800/80 bg-[#121212]" oncontextmenu="return false;">
+                        <div class="embed-container">
+                            <iframe src="https://drive.google.com/file/d/18dVIPFfWigR0m93R-ShXU3G2CgwcjCY6/preview" allow="autoplay; fullscreen"></iframe>
+                        </div>
+                        <div class="absolute top-0 right-0 w-20 h-12 z-20 bg-transparent"></div>
+                    </div>
+                    <div>
+                        <h3 class="text-sm font-normal text-white leading-snug">攻殻機動隊展 展示コンソール</h3>
+                        <p class="text-[11px] text-neutral-400 mt-0.5"><span class="text-neutral-500 uppercase tracking-wider text-[9px] mr-1.5">Role</span>Sound Design</p>
+                    </div>
+                </div>
+
+                <!-- 6. NIKE サッカーイベント「TOMA」 得点LEDモーション -->
+                <div class="space-y-2.5">
+                    <div class="relative overflow-hidden rounded-xl border border-neutral-800/80 bg-[#121212]" oncontextmenu="return false;">
+                        <div class="embed-container">
+                            <iframe src="https://drive.google.com/file/d/1xFBZMyMmt9UbmYh4Xhxju7mKlG2Qkm5t/preview" allow="autoplay; fullscreen"></iframe>
+                        </div>
+                        <div class="absolute top-0 right-0 w-20 h-12 z-20 bg-transparent"></div>
+                    </div>
+                    <div>
+                        <h3 class="text-sm font-normal text-white leading-snug">NIKE サッカーイベント「TOMA」 得点LEDモーション</h3>
+                        <p class="text-[11px] text-neutral-400 mt-0.5"><span class="text-neutral-500 uppercase tracking-wider text-[9px] mr-1.5">Role</span>Sound Design</p>
+                    </div>
+                </div>
+
+                <!-- 7. Panasonic VIERA 「黒のビエラ」篇 -->
+                <div class="space-y-2.5">
+                    <div class="relative overflow-hidden rounded-xl border border-neutral-800/80 bg-[#121212]">
+                        <div class="embed-container">
+                            <iframe src="https://www.youtube.com/embed/SUjL7PS1Tj4?si=c5FJPcCHfwOa0REi" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-sm font-normal text-white leading-snug">Panasonic VIERA 「黒のビエラ」篇</h3>
+                        <p class="text-[11px] text-neutral-400 mt-0.5"><span class="text-neutral-500 uppercase tracking-wider text-[9px] mr-1.5">Role</span>Music / Sound Design</p>
+                    </div>
+                </div>
+
+                <!-- 8. 星新一2026 オープニングムービー -->
+                <div class="space-y-2.5">
+                    <div class="relative overflow-hidden rounded-xl border border-neutral-800/80 bg-[#121212]" oncontextmenu="return false;">
+                        <div class="embed-container">
+                            <iframe src="https://drive.google.com/file/d/1X7QjRVACyT5ABsS7X4jOaSgZtHguyR8p/preview" allow="autoplay; fullscreen"></iframe>
+                        </div>
+                        <div class="absolute top-0 right-0 w-20 h-12 z-20 bg-transparent"></div>
+                    </div>
+                    <div>
+                        <h3 class="text-sm font-normal text-white leading-snug">星新一2026 オープニングムービー</h3>
+                        <p class="text-[11px] text-neutral-400 mt-0.5"><span class="text-neutral-500 uppercase tracking-wider text-[9px] mr-1.5">Role</span>Music</p>
+                    </div>
+                </div>
+
+                <!-- 9. Buffalo TVCM 蜷川実花氏篇 -->
+                <div class="space-y-2.5">
+                    <div class="relative overflow-hidden rounded-xl border border-neutral-800/80 bg-[#121212]">
+                        <div class="embed-container">
+                            <iframe src="https://www.youtube.com/embed/J_qS-D71h6A?si=eLnY3_p01oEbrU5a" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-sm font-normal text-white leading-snug">Buffalo TVCM 蜷川実花氏篇</h3>
+                        <p class="text-[11px] text-neutral-400 mt-0.5"><span class="text-neutral-500 uppercase tracking-wider text-[9px] mr-1.5">Role</span>Music</p>
+                    </div>
+                </div>
+
+                <!-- 10. 日本郵政 デジタルアドレス -->
+                <div class="space-y-2.5">
+                    <div class="relative overflow-hidden rounded-xl border border-neutral-800/80 bg-[#121212]" oncontextmenu="return false;">
+                        <div class="embed-container">
+                            <iframe src="https://drive.google.com/file/d/1sL9nguJ6iDLcPx3tgC_1zpluiuBUkO6a/preview" allow="autoplay; fullscreen"></iframe>
+                        </div>
+                        <div class="absolute top-0 right-0 w-20 h-12 z-20 bg-transparent"></div>
+                    </div>
+                    <div>
+                        <h3 class="text-sm font-normal text-white leading-snug">日本郵政 デジタルアドレス</h3>
+                        <p class="text-[11px] text-neutral-400 mt-0.5"><span class="text-neutral-500 uppercase tracking-wider text-[9px] mr-1.5">Role</span>Music</p>
+                    </div>
+                </div>
+
+                <!-- 11. KATE 号泣の涙神 -->
+                <div class="space-y-2.5">
+                    <div class="relative overflow-hidden rounded-xl border border-neutral-800/80 bg-[#121212]">
+                        <div class="embed-container">
+                            <iframe src="https://www.youtube.com/embed/hkXJYW5HEK0?si=f5pndr9yWfloUE8a" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-sm font-normal text-white leading-snug">KATE 号泣の涙神「泣いたって、美しさ守り抜く。」編</h3>
+                        <p class="text-[11px] text-neutral-400 mt-0.5"><span class="text-neutral-500 uppercase tracking-wider text-[9px] mr-1.5">Role</span>Music</p>
+                    </div>
+                </div>
+
+                <!-- 12. TYO ブランドムービー -->
+                <div class="space-y-2.5">
+                    <div class="relative overflow-hidden rounded-xl border border-neutral-800/80 bg-[#121212]" oncontextmenu="return false;">
+                        <div class="embed-container">
+                            <iframe src="https://drive.google.com/file/d/1NLI9G7yPjpLMxU1rj6cn8UBPGleH-b3Y/preview" allow="autoplay; fullscreen"></iframe>
+                        </div>
+                        <div class="absolute top-0 right-0 w-20 h-12 z-20 bg-transparent"></div>
+                    </div>
+                    <div>
+                        <h3 class="text-sm font-normal text-white leading-snug">TYO ブランドムービー</h3>
+                        <p class="text-[11px] text-neutral-400 mt-0.5"><span class="text-neutral-500 uppercase tracking-wider text-[9px] mr-1.5">Role</span>Music</p>
+                    </div>
+                </div>
+
             </div>
+        </main>
 
-        </section>
+        <!-- フッター -->
+        <footer class="w-full border-t border-white/5 py-8 px-6 mt-16 backdrop-blur-md bg-[#0a0a0a]/50">
+            <div class="max-w-7xl mx-auto flex justify-between items-center text-xs text-neutral-600">
+                <div>
+                    &copy; Dan Kubo. All rights reserved.
+                </div>
+                <button onclick="logout()" class="hover:text-neutral-400 transition">
+                    Logout
+                </button>
+            </div>
+        </footer>
 
-    </main>
+    </div>
 
-    <!-- フッター -->
-    <footer class="w-full border-t border-neutral-900 py-8 px-6 mt-16 text-center text-xs text-neutral-600">
-        &copy; Dan Kubo / All rights reserved.
-    </footer>
-
+    <script>
+        function logout() {
+            sessionStorage.removeItem('cw_auth');
+            window.location.href = 'index.html';
+        }
+    </script>
 </body>
 </html>
