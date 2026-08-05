@@ -66,7 +66,7 @@
     <!-- コンテンツ全体 -->
     <div class="relative z-10 flex flex-col min-h-screen justify-between">
 
-        <!-- ヘッダー / 言語切り替えのみ（右寄せ）: 余白1を短縮するため pt-6 に調整 -->
+        <!-- ヘッダー / 言語切り替えのみ（右寄せ） -->
         <header class="w-full max-w-5xl mx-auto px-6 pt-6 pb-2 flex justify-end items-center relative z-40">
             <div class="flex space-x-2 text-xs tracking-wider bg-neutral-900/40 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/5">
                 <button id="btn-ja" onclick="setLanguage('ja')" class="text-white border-b border-white pb-0.5 transition font-medium">JP</button>
@@ -79,8 +79,8 @@
         <main class="w-full max-w-5xl mx-auto px-6 py-2 flex-grow">
             
             <!-- 1. アーティスト名 & 肩書（Sticky固定領域） -->
-            <!-- pb-4 mb-8 で余白2（名前と本文の距離）をしっかりと確保 -->
-            <div id="artist-header" class="sticky top-0 z-30 pt-2 pb-4 mb-8 bg-transparent pointer-events-none">
+            <!-- mb-12 md:mb-16 で余白2（名前と本文の距離）をしっかりと広く確保 -->
+            <div id="artist-header" class="sticky top-0 z-30 pt-2 pb-4 mb-12 md:mb-16 bg-transparent pointer-events-none">
                 <div class="pointer-events-auto">
                     <h1 class="text-3xl md:text-5xl font-light tracking-tight text-white mb-2 drop-shadow-md">
                         Dan Kubo <span class="text-neutral-500 font-extralight">/ 1e1</span>
@@ -224,33 +224,23 @@
             const fadeContent = document.getElementById('fade-content');
             if (!header || !fadeContent) return;
 
-            const scrollY = window.scrollY || document.documentElement.scrollTop;
-
-            // 最初（ほとんどスクロールしていない時）はマスクを絶対かけない
-            if (scrollY < 10) {
-                fadeContent.classList.remove('dynamic-fade-mask');
-                return;
-            }
-
             const headerRect = header.getBoundingClientRect();
             const contentRect = fadeContent.getBoundingClientRect();
 
             const headerBottom = headerRect.bottom;
             const contentTop = contentRect.top;
 
-            // 余白2（名前の下〜本文上までの間）の範囲内で消えるように設計
-            // 名前直下 + 10px のラインで完全消失（透明）
-            // そこから 50px 下の地点で完全表示（黒）
-            const fadeStartOffset = 10; 
-            const fadeRange = 50;       
+            // --- 調整パラメーター ---
+            const fadeStartOffset = 8;  // 名前の直下 8px の地点で完全透明（消滅）
+            const fadeRange = 24;       // グラデーション幅を24pxに急傾斜化（余白2の中で一瞬で消える）
 
-            // 本文の頭がまだフェード開始領域に達していない場合はマスクを適用しない
+            // 本文の上端が「フェード領域（名前の下端 + 32px）」よりも下にある間は、一切マスクをかけない（100%くっきり表示）
             if (contentTop > headerBottom + fadeStartOffset + fadeRange) {
                 fadeContent.classList.remove('dynamic-fade-mask');
                 return;
             }
 
-            // 本文領域内の相対Y座標に変換してマスクを設定
+            // フェード領域に入った瞬間のみマスクを計算して適用
             const relativeFadeTop = Math.max(0, headerBottom - contentTop + fadeStartOffset);
             const relativeFadeBottom = relativeFadeTop + fadeRange;
 
