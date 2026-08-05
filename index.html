@@ -13,13 +13,31 @@
     </script>
     <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <!-- Google Fonts -->
+    <!-- Google Fonts & Helvetica対応 -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Noto+Sans+JP:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Inter', 'Noto Sans JP', sans-serif;
+        }
+
+        /* ヘッダー専用：Helveticaを最優先にしたソリッドなフォント設定 */
+        .artist-title-font {
+            font-family: "Helvetica Neue", Helvetica, Arial, 'Inter', 'Noto Sans JP', sans-serif;
+            font-weight: 700; /* Boldで統一してカクつきを完全防止 */
+        }
+
+        /* アクティブな文字に微量のグロー効果（立体感）を付与 */
+        .glow-active {
+            color: #ffffff;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.35);
+        }
+
+        /* 非アクティブな文字 */
+        .glow-inactive {
+            color: #737373; /* neutral-500相当 */
+            text-shadow: none;
         }
 
         /* 全体背景オーバーレイ */
@@ -69,21 +87,20 @@
         <!-- メインコンテンツ -->
         <main class="w-full max-w-5xl mx-auto px-6 py-2 flex-grow">
             
-            <!-- アーティスト名 ＆ 言語切り替え（Sticky固定領域） -->
-            <div id="artist-header" class="sticky top-4 md:top-6 z-30 pt-2 pb-2 mb-10 md:mb-12 bg-transparent pointer-events-none">
-                <div class="pointer-events-auto flex justify-between items-start">
-                    <!-- アーティスト名 & 肩書 -->
+            <!-- アーティスト名 ＆ 言語切り替え（Sticky固定領域）※上部・下部余白を5mm相当（約18〜20px / tailwindクラス微調整）縮小 -->
+            <div id="artist-header" class="sticky top-5 md:top-6 z-30 pt-2.5 pb-2.5 mb-10 md:mb-14 bg-transparent pointer-events-none">
+                <div class="pointer-events-auto flex justify-between items-center">
+                    <!-- アーティスト名（Helvetica Bold ＋ 色とシャドウで滑らかにクロスフェード） -->
                     <div>
-                        <h1 class="text-3xl md:text-5xl font-light tracking-tight text-white mb-1.5 drop-shadow-md">
-                            Dan Kubo <span class="text-neutral-500 font-extralight">/ 1e1</span>
+                        <h1 class="text-3xl md:text-5xl tracking-tight flex items-center space-x-2.5 md:space-x-3.5 m-0 artist-title-font">
+                            <span id="nav-dankubo" class="transition-all duration-500 glow-active">Dan Kubo</span>
+                            <span class="text-neutral-600 font-light">/</span>
+                            <span id="nav-1e1" class="transition-all duration-500 glow-inactive">1e1</span>
                         </h1>
-                        <p class="text-sm md:text-base text-neutral-400 font-light tracking-wide drop-shadow">
-                            Artist / Composer / Producer
-                        </p>
                     </div>
 
                     <!-- 言語切り替え -->
-                    <div class="flex space-x-2 text-xs tracking-wider bg-neutral-900/40 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/5 mt-2.5">
+                    <div class="flex space-x-2 text-xs tracking-wider bg-neutral-900/40 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/5">
                         <button id="btn-ja" onclick="setLanguage('ja')" class="text-white border-b border-white pb-0.5 transition font-medium">JP</button>
                         <span class="text-neutral-600">/</span>
                         <button id="btn-en" onclick="setLanguage('en')" class="text-neutral-500 hover:text-white transition font-medium">EN</button>
@@ -107,27 +124,70 @@
                         >
                     </div>
 
-                    <!-- プロフィール文章 -->
-                    <section class="mb-10">
-                        <!-- 日本語プロフ -->
-                        <div id="prof-ja" class="space-y-4 text-neutral-300 text-sm md:text-base leading-relaxed font-light">
-                            <p>1e1（イェル）は東京を中心に活動する音楽家・プロデューサーの久保暖によるソロプロジェクト。HipHop・R&Bを中心としたブラックミュージックに、現代音楽の一分野とされる電子音響音楽における独自の作曲手法を用いた音を織り交ぜた音楽を生み出す。</p>
-                            <p>2018年10月31日に1st EP 「Quartier Latin」をリリース。各リリースは数多くのアーティストから支持を受け、2020年10月にリリースした1st album「Cryptobiosis」は、Webメディア『Mastered』にてSeihoが選ぶ当該年レコード大賞にノミネート。</p>
-                            <p>その活動は楽曲制作にとどまらず、グラフィックやインスタレーションを主としたアート分野での制作も行なっており、Licaxxx、Kazuki Muraokaらとの共同制作も行なっている。</p>
-                            <p>2024年8月14日、2nd EP「Asymptote」をリリース。</p>
-                        </div>
+                    <!-- プロフィール文章（日本語） -->
+                    <div id="content-ja" class="space-y-12">
+                        <!-- Dan Kubo (久保暖) セクション -->
+                        <section id="section-dankubo-ja" class="space-y-4">
+                            <h2 class="text-xl md:text-2xl font-light text-white tracking-tight border-b border-neutral-800 pb-2">久保 暖</h2>
+                            <div class="space-y-4 text-neutral-300 text-sm md:text-base leading-relaxed font-light">
+                                <p>音楽家、アーティスト、プロデューサー。<br>東京を拠点に、ソロプロジェクト「1e1（イェル）」をはじめ多角的な活動を展開する。</p>
+                                <p>独自の音響生成技法や作曲手法を軸に、クラシックや現代音楽の緻密な理論構造から、Hip-Hop/R&B、LA Beatなどのクラブミュージックまで、多様な音楽領域を自由に横断する音響空間を立ち上げる。</p>
+                                <p>これまでにSeiho、Licaxxx、高井息吹、塩入冬湖、Samayuzame、Kazuki Muraoka、Pause Cattiらと共作・協働。また、三浦透子、haru.、岸裕真らへの楽曲提供・サウンドデザインのほか、劇伴、映像作品、企業CMの音楽制作を幅広く手がける。</p>
+                                <p>メディア芸術・アカデミックの領域でも高い評価を受けており、文化庁メディア芸術祭審査委員会推薦作品への選出をはじめ、ICMC、NYCEMF、MUSLAB、CCMCなど国内外の国際コンペティションや学会で多数受賞。<br>2019年には川島大輔とのユニット「D+D」として、表参道スパイラルホールにてオーディオヴィジュアル作品『Transposon Live』を上演。</p>
+                                <div class="pt-2 text-xs text-neutral-400 space-y-1 border-t border-neutral-800/60 font-mono">
+                                    <p>東京藝術大学大学院 音楽研究科 音楽文化学専攻 音楽音響創造研究領域修了</p>
+                                    <p>東京藝術大学大学院 美術研究科 デザイン専攻 空間演出研究室修了</p>
+                                </div>
+                            </div>
+                        </section>
 
-                        <!-- 英語プロフ -->
-                        <div id="prof-en" class="space-y-4 text-neutral-300 text-sm md:text-base leading-relaxed font-light hidden">
-                            <p>1e1 (pronounced "jəl") is a solo project by Dan Kubo, a musician and producer based in Tokyo. He creates music that combines mainly hip-hop and R&B, with sounds that use his own compositional techniques in acousmatic music, which is considered a branch of contemporary music.</p>
-                            <p>He released his first EP, "Quartier Latin," on October 31, 2018. Each release has been supported by many artists, and his first album, "Cryptobiosis," released in October 2020, was nominated for the Record of the Year Award selected by Seiho on the web media "Mastered."</p>
-                            <p>His activities are not limited to music production, but also include production in the art field, mainly graphics and installations, and he has collaborated with Licaxxx, Kazuki Muraoka, and others.</p>
-                            <p>He released his second EP, "Asymptote," on August 14, 2024.</p>
-                        </div>
-                    </section>
+                        <div class="w-12 h-px bg-neutral-800 mx-auto"></div>
+
+                        <!-- 1e1 セクション -->
+                        <section id="section-1e1-ja" class="space-y-4">
+                            <h2 class="text-xl md:text-2xl font-light text-white tracking-tight border-b border-neutral-800 pb-2">1e1（イェル）</h2>
+                            <div class="space-y-4 text-neutral-300 text-sm md:text-base leading-relaxed font-light">
+                                <p>1e1（iel / イェル）は、東京を拠点に活動する音楽家・プロデューサー久保暖によるソロプロジェクト。</p>
+                                <p>Hip-HopやR&Bといったブラックミュージックの文脈と、LA Beatをはじめとする先進的なクラブミュージック、電子音楽の意匠。そこにクラシックや現代音楽をルーツとする高度な音響生成技法・構造論を融合させ、独自のサウンドを展開する。</p>
+                                <p>2018年に1st EP『Quartier Latin』で始動。2020年リリースの1st Album『Cryptobiosis』はWebメディア『Mastered』の企画にてプロデューサーSeiho氏の年間ベストにノミネートされるなど、シーンのクリエイターやメディアから深く支持される。<br>2024年には2nd EP『Asymptote』を発表。すべての作品は明確なコンセプトに基づいて精緻に構築され、言語と音楽、ポップネスと実験性の狭間を穿ち、思考と聴覚を揺さぶる体験を展開する。</p>
+                                <p>その活動は楽曲制作にとどまらず、グラフィックやインスタレーションといった視覚・空間芸術にもアプローチを展開し、領域を限定しない実験と表現を続けている。<br>東京を中心に、全国のクラブやライブハウス、フェスでのライブパフォーマンスを行う。</p>
+                            </div>
+                        </section>
+                    </div>
+
+                    <!-- プロフィール文章（英語） -->
+                    <div id="content-en" class="space-y-12 hidden">
+                        <!-- Dan Kubo セクション -->
+                        <section id="section-dankubo-en" class="space-y-4">
+                            <h2 class="text-xl md:text-2xl font-light text-white tracking-tight border-b border-neutral-800 pb-2">Dan Kubo</h2>
+                            <div class="space-y-4 text-neutral-300 text-sm md:text-base leading-relaxed font-light">
+                                <p>Musician, artist, and producer based in Tokyo, Dan Kubo engages in a wide range of creative practices, centered around his solo project "1e1" (pronounced iel).</p>
+                                <p>Utilizing proprietary sound-generation techniques and compositional approaches, he crafts immersive acoustic spaces that seamlessly bridge diverse musical genres—from the precise theoretical structures of classical and contemporary music to club music, including Hip-Hop, R&B, and LA Beat.</p>
+                                <p>He has collaborated with numerous artists, including Seiho, Licaxxx, Ibuki Takai, Fuyuko Shioiri, Samayuzame, Kazuki Muraoka, and Pause Catti. Beyond collaboration, he provides music compositions and sound design for artists such as Toko Miura, haru., and Yuma Kishi, alongside scoring for films, media art, and TV commercials.</p>
+                                <p>Kubo has also earned high acclaim in media arts and academia. His work was selected for the Jury Recommends list at the Japan Media Arts Festival, and he has received numerous awards at international competitions and academic conferences, including ICMC, NYCEMF, MUSLAB, and CCMC. In 2019, as part of the audio-visual duo "D+D" with Daisuke Kawashima, he performed Transposon Live at Spiral Hall in Omotesando, Tokyo.</p>
+                                <div class="pt-2 text-xs text-neutral-400 space-y-1 border-t border-neutral-800/60 font-mono">
+                                    <p>M.A. in Music (Musical Creativity and Environment), Graduate School of Music, Tokyo University of the Arts</p>
+                                    <p>M.F.A. in Design (Spatial Design), Graduate School of Fine Arts, Tokyo University of the Arts</p>
+                                </div>
+                            </div>
+                        </section>
+
+                        <div class="w-12 h-px bg-neutral-800 mx-auto"></div>
+
+                        <!-- 1e1 セクション -->
+                        <section id="section-1e1-en" class="space-y-4">
+                            <h2 class="text-xl md:text-2xl font-light text-white tracking-tight border-b border-neutral-800 pb-2">1e1</h2>
+                            <div class="space-y-4 text-neutral-300 text-sm md:text-base leading-relaxed font-light">
+                                <p>1e1 (iel, pronounced /jəl/) is a Tokyo-based solo project by musician and producer Dan Kubo.</p>
+                                <p>The project presents a signature sound that fuses the contexts of black music—such as Hip-Hop and R&B—with the aesthetics of electronic and forward-thinking club music like LA Beat, while integrating advanced sound-generation techniques and structural theories rooted in classical and contemporary music.</p>
+                                <p>Launched in 2018 with the 1st EP Quartier Latin, 1e1 released its 1st album Cryptobiosis in October 2020, which was nominated for Producer Seiho’s Album of the Year on the web media outlet Mastered. In 2024, 1e1 released the 2nd EP Asymptote. Meticulously constructed around precise concepts, every work pierces the boundaries between language and music, pop sensibility and experimentation, offering an experience that engages both the mind and ear.</p>
+                                <p>Extending beyond music production, 1e1 actively explores visual and spatial arts, including graphics and installation work, pursuing boundless experimentation. 1e1 performs live at clubs, live venues, and festivals across Japan, primarily centered in Tokyo.</p>
+                            </div>
+                        </section>
+                    </div>
 
                     <!-- リンクエリア（サブスク & SNS） -->
-                    <section class="space-y-6">
+                    <section class="space-y-6 mt-12 pt-8 border-t border-neutral-800/60">
                         <!-- 音楽配信サービス -->
                         <div>
                             <h2 class="text-xs uppercase tracking-widest text-neutral-500 mb-3 font-semibold">Listen</h2>
@@ -217,6 +277,8 @@
 
     <!-- JavaScript -->
     <script>
+        let currentLang = 'ja';
+
         function updateScrollFade() {
             const header = document.getElementById('artist-header');
             const fadeContent = document.getElementById('fade-content');
@@ -236,6 +298,26 @@
 
             fadeContent.style.setProperty('--fade-top', `${relativeFadeTop}px`);
             fadeContent.style.setProperty('--fade-bottom', `${relativeFadeBottom}px`);
+
+            // スクロール位置に応じたハイライト切替（Bold固定のまま色とグローをクロスフェード）
+            const navDan = document.getElementById('nav-dankubo');
+            const nav1e1 = document.getElementById('nav-1e1');
+            const section1e1 = document.getElementById(`section-1e1-${currentLang}`);
+
+            if (navDan && nav1e1 && section1e1) {
+                const rect1e1 = section1e1.getBoundingClientRect();
+                const threshold = window.innerHeight * 0.45;
+
+                if (rect1e1.top <= threshold) {
+                    // 1e1側がアクティブ
+                    nav1e1.className = "transition-all duration-500 glow-active";
+                    navDan.className = "transition-all duration-500 glow-inactive";
+                } else {
+                    // Dan Kubo側がアクティブ
+                    navDan.className = "transition-all duration-500 glow-active";
+                    nav1e1.className = "transition-all duration-500 glow-inactive";
+                }
+            }
         }
 
         window.addEventListener('scroll', updateScrollFade, { passive: true });
@@ -244,8 +326,9 @@
 
         // 言語切り替えロジック
         function setLanguage(lang) {
-            const profJa = document.getElementById('prof-ja');
-            const profEn = document.getElementById('prof-en');
+            currentLang = lang;
+            const contentJa = document.getElementById('content-ja');
+            const contentEn = document.getElementById('content-en');
             const btnJa = document.getElementById('btn-ja');
             const btnEn = document.getElementById('btn-en');
 
@@ -253,13 +336,13 @@
             const inactiveClass = "text-neutral-500 hover:text-white transition font-medium";
 
             if (lang === 'en') {
-                profJa.classList.add('hidden');
-                profEn.classList.remove('hidden');
+                contentJa.classList.add('hidden');
+                contentEn.classList.remove('hidden');
                 btnEn.className = activeClass;
                 btnJa.className = inactiveClass;
             } else {
-                profEn.classList.add('hidden');
-                profJa.classList.remove('hidden');
+                contentEn.classList.add('hidden');
+                contentJa.classList.remove('hidden');
                 btnJa.className = activeClass;
                 btnEn.className = inactiveClass;
             }
