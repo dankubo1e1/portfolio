@@ -79,7 +79,8 @@
         <main class="w-full max-w-5xl mx-auto px-6 py-4 md:py-8 flex-grow">
             
             <!-- 1. アーティスト名 & 肩書（Sticky固定領域） -->
-            <div id="artist-header" class="sticky top-0 z-30 pt-4 pb-4 mb-2 bg-transparent pointer-events-none">
+            <!-- mb-8 md:mb-12 でアーティスト名と本文の間にしっかり余白を確保 -->
+            <div id="artist-header" class="sticky top-0 z-30 pt-4 pb-4 mb-8 md:mb-12 bg-transparent pointer-events-none">
                 <div class="pointer-events-auto">
                     <h1 class="text-3xl md:text-5xl font-light tracking-tight text-white mb-2 drop-shadow-md">
                         Dan Kubo <span class="text-neutral-500 font-extralight">/ 1e1</span>
@@ -91,7 +92,7 @@
             </div>
 
             <!-- 2. コンテンツエリア -->
-            <div class="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 items-start pt-2">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 items-start">
                 
                 <!-- 左側：プロフィール本文 ＋ リンク（動的フェードアウト対象） -->
                 <div id="fade-content" class="md:col-span-7 flex flex-col text-left">
@@ -223,26 +224,27 @@
             const fadeContent = document.getElementById('fade-content');
             if (!header || !fadeContent) return;
 
-            const scrollY = window.scrollY || document.documentElement.scrollTop;
-
-            // スクロールしていない初期状態（または一番上付近）はマスクを適用せず、完全にくっきり表示する
-            if (scrollY <= 5) {
-                fadeContent.classList.remove('dynamic-fade-mask');
-                return;
-            }
-
             const headerRect = header.getBoundingClientRect();
             const contentRect = fadeContent.getBoundingClientRect();
 
             // アーティスト名領域の下端
             const headerBottom = headerRect.bottom;
+            // 本文の上端位置
+            const contentTop = contentRect.top;
 
-            // アーティスト名の下に適切な余白（マージン）を設けてフェードの開始と完了位置を計算
-            const topMargin = 40;     // 消え切る（透明になる）位置の余白オフセット
-            const fadeLength = 50;    // 透明から不透明へのグラデーション幅
+            // 余白のクッションサイズ（アーティスト名の下端からどれくらい離れた場所で完全消失させるか）
+            const fadeGapMargin = 20;  // アーティスト名の下20pxの位置で完全透明（消滅）
+            const fadeLength = 60;     // 透明から完全表示（黒）までのフェードグラデーション幅
 
-            const relativeFadeTop = Math.max(0, headerBottom - contentRect.top + topMargin);
-            const relativeFadeBottom = Math.max(0, relativeFadeTop + fadeLength);
+            // 本文の上端が「フェード完了ライン」に達していない（まだ下にある）ときはマスクを解除
+            if (contentTop > headerBottom + fadeGapMargin + fadeLength) {
+                fadeContent.classList.remove('dynamic-fade-mask');
+                return;
+            }
+
+            // 本文要素内の相対座標としてマスクのY軸位置を計算
+            const relativeFadeTop = Math.max(0, headerBottom - contentTop + fadeGapMargin);
+            const relativeFadeBottom = relativeFadeTop + fadeLength;
 
             fadeContent.classList.add('dynamic-fade-mask');
             fadeContent.style.setProperty('--fade-top', `${relativeFadeTop}px`);
