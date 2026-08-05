@@ -94,7 +94,7 @@
             <div class="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 items-start pt-2">
                 
                 <!-- 左側：プロフィール本文 ＋ リンク（動的フェードアウト対象） -->
-                <div id="fade-content" class="md:col-span-7 flex flex-col text-left dynamic-fade-mask">
+                <div id="fade-content" class="md:col-span-7 flex flex-col text-left">
                     
                     <!-- スマホのみ表示されるアー写 -->
                     <div class="block md:hidden mb-8 w-full aspect-square overflow-hidden rounded-2xl relative">
@@ -223,14 +223,28 @@
             const fadeContent = document.getElementById('fade-content');
             if (!header || !fadeContent) return;
 
+            const scrollY = window.scrollY || document.documentElement.scrollTop;
+
+            // スクロールしていない初期状態（または一番上付近）はマスクを適用せず、完全にくっきり表示する
+            if (scrollY <= 5) {
+                fadeContent.classList.remove('dynamic-fade-mask');
+                return;
+            }
+
             const headerRect = header.getBoundingClientRect();
             const contentRect = fadeContent.getBoundingClientRect();
 
-            // アーティスト名の下端Y座標からグラデーション領域を算出
+            // アーティスト名領域の下端
             const headerBottom = headerRect.bottom;
-            const relativeFadeTop = Math.max(0, headerBottom - contentRect.top - 20);
-            const relativeFadeBottom = Math.max(0, headerBottom - contentRect.top + 30);
 
+            // アーティスト名の下に適切な余白（マージン）を設けてフェードの開始と完了位置を計算
+            const topMargin = 40;     // 消え切る（透明になる）位置の余白オフセット
+            const fadeLength = 50;    // 透明から不透明へのグラデーション幅
+
+            const relativeFadeTop = Math.max(0, headerBottom - contentRect.top + topMargin);
+            const relativeFadeBottom = Math.max(0, relativeFadeTop + fadeLength);
+
+            fadeContent.classList.add('dynamic-fade-mask');
             fadeContent.style.setProperty('--fade-top', `${relativeFadeTop}px`);
             fadeContent.style.setProperty('--fade-bottom', `${relativeFadeBottom}px`);
         }
