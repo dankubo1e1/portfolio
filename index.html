@@ -22,6 +22,7 @@
     <style>
         body {
             font-family: 'Inter', 'Noto Sans JP', sans-serif;
+            scroll-behavior: smooth; /* スムーズスクロールを有効化 */
         }
 
         /* ヘッダー専用：Helveticaを最優先にしたソリッドなフォント設定 */
@@ -30,16 +31,16 @@
             font-weight: 700; /* Boldで統一してカクつきを完全防止 */
         }
 
-        /* アクティブな文字に微量のグロー効果（立体感）を付与 */
+        /* アクティブな文字（完全な白 ＋ 微量のグロー） */
         .glow-active {
-            color: #ffffff;
+            color: #ffffff !important;
             text-shadow: 0 0 20px rgba(255, 255, 255, 0.35);
         }
 
-        /* 非アクティブな文字 */
+        /* 非アクティブな文字（しっかり暗転） */
         .glow-inactive {
-            color: #737373; /* neutral-500相当 */
-            text-shadow: none;
+            color: #525252 !important; /* neutral-600 */
+            text-shadow: none !important;
         }
 
         /* 全体背景オーバーレイ */
@@ -113,12 +114,12 @@
             <!-- アーティスト名 ＆ 言語切り替え（Sticky固定領域） -->
             <div id="artist-header" class="sticky top-5 md:top-6 z-30 pt-2.5 pb-2.5 mb-10 md:mb-14 bg-transparent pointer-events-none">
                 <div class="pointer-events-auto flex justify-between items-center">
-                    <!-- アーティスト名 -->
+                    <!-- アーティスト名（クリックでスムーズスクロール） -->
                     <div>
                         <h1 class="text-3xl md:text-5xl tracking-tight flex items-center space-x-2.5 md:space-x-3.5 m-0 artist-title-font">
-                            <span id="nav-dankubo" class="transition-all duration-500 glow-active">Dan Kubo</span>
+                            <button type="button" onclick="scrollToSection('dankubo')" id="nav-dankubo" class="transition-all duration-300 glow-active cursor-pointer bg-transparent border-none p-0 text-inherit font-inherit">Dan Kubo</button>
                             <span class="text-neutral-600 font-light">/</span>
-                            <span id="nav-1e1" class="transition-all duration-500 glow-inactive">1e1</span>
+                            <button type="button" onclick="scrollToSection('1e1')" id="nav-1e1" class="transition-all duration-300 glow-inactive cursor-pointer bg-transparent border-none p-0 text-inherit font-inherit">1e1</button>
                         </h1>
                     </div>
 
@@ -151,7 +152,7 @@
                     <div id="content-ja" class="space-y-12">
                         <!-- Dan Kubo (久保暖) セクション -->
                         <section id="section-dankubo-ja" class="space-y-4">
-                            <h2 class="text-xl md:text-2xl font-light text-white tracking-tight border-b border-neutral-800 pb-2">久保 暖</h2>
+                            <h2 id="heading-dankubo-ja" class="text-xl md:text-2xl font-light text-white tracking-tight border-b border-neutral-800 pb-2">久保 暖</h2>
                             <div class="space-y-4 text-neutral-300 text-sm md:text-base leading-relaxed font-light">
                                 <p>音楽家、アーティスト、プロデューサー。<br>東京を拠点に、ソロプロジェクト「1e1（イェル）」をはじめ多角的な活動を展開している。</p>
                                 <p>独自の音響生成技法や作曲手法を軸に、クラシックや現代音楽の緻密な理論構造から、Hip-Hop/R&B、LA Beatなどのクラブミュージックまで、多様な領域を自由に越境する音楽を立ち上げる。</p>
@@ -168,7 +169,7 @@
 
                         <!-- 1e1 セクション -->
                         <section id="section-1e1-ja" class="space-y-4">
-                            <h2 class="text-xl md:text-2xl font-light text-white tracking-tight border-b border-neutral-800 pb-2">1e1（イェル）</h2>
+                            <h2 id="heading-1e1-ja" class="text-xl md:text-2xl font-light text-white tracking-tight border-b border-neutral-800 pb-2">1e1（イェル）</h2>
                             <div class="space-y-4 text-neutral-300 text-sm md:text-base leading-relaxed font-light">
                                 <p>1e1（iel / イェル）は、東京を拠点に活動する音楽家・プロデューサー久保暖によるソロプロジェクト。</p>
                                 <p>Hip-HopやR&Bといったブラックミュージックの文脈と、LA Beatをはじめとするクラブミュージックや先進的な電子音楽の意匠に、クラシックや現代音楽をルーツとする高度な音響生成技法・構造論を融合させ、独自のサウンドを展開する。</p>
@@ -182,7 +183,7 @@
                     <div id="content-en" class="space-y-12 hidden">
                         <!-- Dan Kubo セクション -->
                         <section id="section-dankubo-en" class="space-y-4">
-                            <h2 class="text-xl md:text-2xl font-light text-white tracking-tight border-b border-neutral-800 pb-2">Dan Kubo</h2>
+                            <h2 id="heading-dankubo-en" class="text-xl md:text-2xl font-light text-white tracking-tight border-b border-neutral-800 pb-2">Dan Kubo</h2>
                             <div class="space-y-4 text-neutral-300 text-sm md:text-base leading-relaxed font-light">
                                 <p>Musician, artist, and producer based in Tokyo, Dan Kubo engages in a wide range of creative practices, centered around his solo project "1e1" (pronounced iel).</p>
                                 <p>Utilizing proprietary sound-generation techniques and compositional approaches, he crafts immersive acoustic spaces that seamlessly bridge diverse musical genres—from the precise theoretical structures of classical and contemporary music to club music, including Hip-Hop, R&B, and LA Beat.</p>
@@ -199,7 +200,7 @@
 
                         <!-- 1e1 セクション -->
                         <section id="section-1e1-en" class="space-y-4">
-                            <h2 class="text-xl md:text-2xl font-light text-white tracking-tight border-b border-neutral-800 pb-2">1e1</h2>
+                            <h2 id="heading-1e1-en" class="text-xl md:text-2xl font-light text-white tracking-tight border-b border-neutral-800 pb-2">1e1</h2>
                             <div class="space-y-4 text-neutral-300 text-sm md:text-base leading-relaxed font-light">
                                 <p>1e1 (iel, pronounced /jəl/) is a Tokyo-based solo project by musician and producer Dan Kubo.</p>
                                 <p>The project presents a signature sound that fuses the contexts of black music—such as Hip-Hop and R&B—with club music and forward-thinking electronic music aesthetics like LA Beat, while integrating advanced sound-generation techniques and structural theories rooted in classical and contemporary music.</p>
@@ -377,7 +378,7 @@
             const headerBottom = headerRect.bottom;
             const contentTop = contentRect.top;
 
-            const fadeStartOffset = 12;  
+            const fadeStartOffset =  12;  
             const fadeRange = 20;       
 
             const relativeFadeTop = headerBottom - contentTop + fadeStartOffset;
@@ -386,23 +387,49 @@
             fadeContent.style.setProperty('--fade-top', `${relativeFadeTop}px`);
             fadeContent.style.setProperty('--fade-bottom', `${relativeFadeBottom}px`);
 
-            // スクロール位置に応じたハイライト切替
+            // 手動スクロール時のハイライト判定（1行分早く光る設定を維持）
             const navDan = document.getElementById('nav-dankubo');
             const nav1e1 = document.getElementById('nav-1e1');
-            const section1e1 = document.getElementById(`section-1e1-${currentLang}`);
+            const heading1e1 = document.getElementById(`heading-1e1-${currentLang}`);
 
-            if (navDan && nav1e1 && section1e1) {
-                const rect1e1 = section1e1.getBoundingClientRect();
-                const threshold = window.innerHeight * 0.45;
+            if (navDan && nav1e1 && heading1e1) {
+                const rect1e1 = heading1e1.getBoundingClientRect();
+                const headerBottomPos = header.getBoundingClientRect().bottom;
 
-                if (rect1e1.top <= threshold) {
-                    nav1e1.className = "transition-all duration-500 glow-active";
-                    navDan.className = "transition-all duration-500 glow-inactive";
+                if (rect1e1.top <= headerBottomPos + 192) {
+                    nav1e1.className = "transition-all duration-300 glow-active cursor-pointer bg-transparent border-none p-0 text-inherit font-inherit";
+                    navDan.className = "transition-all duration-300 glow-inactive cursor-pointer bg-transparent border-none p-0 text-inherit font-inherit";
                 } else {
-                    navDan.className = "transition-all duration-500 glow-active";
-                    nav1e1.className = "transition-all duration-500 glow-inactive";
+                    navDan.className = "transition-all duration-300 glow-active cursor-pointer bg-transparent border-none p-0 text-inherit font-inherit";
+                    nav1e1.className = "transition-all duration-300 glow-inactive cursor-pointer bg-transparent border-none p-0 text-inherit font-inherit";
                 }
             }
+        }
+
+        // スクロール先の正確な位置合わせ
+        function scrollToSection(target) {
+            const header = document.getElementById('artist-header');
+            
+            if (target === 'dankubo') {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+                return;
+            }
+
+            // 1e1 の場合：クリック時の自動スクロール位置を指定通り -75 に変更
+            const heading = document.getElementById(`heading-${target}-${currentLang}`);
+            if (!heading) return;
+
+            const headerHeight = header.offsetHeight;
+            const elementPosition = heading.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - headerHeight - 75;
+
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: 'smooth'
+            });
         }
 
         window.addEventListener('scroll', updateScrollFade, { passive: true });
@@ -453,9 +480,7 @@
                 const data = await response.json();
 
                 if (response.status === 200) {
-                    // フォーム内容を初期化（プレースホルダー状態に戻す）
                     form.reset();
-                    // モーダルを表示（言語に応じたテキストをセット）
                     openModal();
                 } else {
                     alert(currentLang === 'en' ? (data.message || "Failed to send. Please try again later.") : (data.message || "送信に失敗しました。時間をおいて再度お試しください。"));
