@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dan Kubo / 1e1 - Official Website</title>
+    <title>Dan Kubo / 1e1</title>
     <!-- Tailwind CSS (デザイン用) -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -22,176 +22,165 @@
             font-family: 'Inter', 'Noto Sans JP', sans-serif;
         }
 
-        /* Darkモード時の上下フェード＆ブラーマスク */
-        .dark .bg-overlay {
+        /* ダークモード時の上下フェード＆ブラーマスク */
+        .bg-overlay {
             background: linear-gradient(
                 to bottom,
                 #0a0a0a 0%,
-                rgba(10, 10, 10, 0.6) 25%,
-                rgba(10, 10, 10, 0.6) 75%,
+                rgba(10, 10, 10, 0.65) 25%,
+                rgba(10, 10, 10, 0.65) 75%,
                 #0a0a0a 100%
-            );
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
-        }
-
-        /* Lightモード時の上下フェード＆ブラーマスク */
-        .light-mode .bg-overlay {
-            background: linear-gradient(
-                to bottom,
-                #f5f5f5 0%,
-                rgba(245, 245, 245, 0.7) 25%,
-                rgba(245, 245, 245, 0.7) 75%,
-                #f5f5f5 100%
             );
             backdrop-filter: blur(24px);
             -webkit-backdrop-filter: blur(24px);
         }
     </style>
 </head>
-<body id="body" class="dark bg-[#0a0a0a] text-neutral-200 transition-colors duration-300 min-h-screen flex flex-col justify-between selection:bg-neutral-800 selection:text-white relative overflow-x-hidden">
+<body class="dark bg-[#0a0a0a] text-neutral-200 min-h-screen flex flex-col justify-between selection:bg-neutral-800 selection:text-white relative overflow-x-hidden">
 
-    <!-- 背景：過去のアー写 ＋ グラデーションブラーフィルター -->
-    <!-- インラインスタイルで確実にパスを適用 -->
+    <!-- 背景：固定画像 ＋ グラデーションブラーフィルター -->
     <div 
         class="fixed inset-0 bg-cover bg-center z-0 scale-105 transform pointer-events-none" 
         style="background-image: url('img/bg-artist.jpg');"
     ></div>
     <div class="fixed inset-0 bg-overlay z-0 pointer-events-none"></div>
 
-    <!-- コンテンツ全体（背景の上層） -->
+    <!-- コンテンツ全体 -->
     <div class="relative z-10 flex flex-col min-h-screen justify-between">
 
-        <!-- ヘッダー / 言語 & テーマ切り替え -->
-        <header class="w-full max-w-4xl mx-auto px-6 pt-10 flex justify-between items-center">
-            <div class="text-xs tracking-widest uppercase text-neutral-500 dark:text-neutral-400 font-medium">Official Web</div>
-            
-            <div class="flex items-center space-x-6">
-                <!-- DARK / LIGHT テーマ切り替え -->
-                <div class="flex items-center space-x-2 text-xs tracking-wider">
-                    <button onclick="toggleTheme('dark')" id="theme-dark-btn" class="font-medium transition text-white border-b border-white pb-0.5">DARK</button>
-                    <span class="text-neutral-600">/</span>
-                    <button onclick="toggleTheme('light')" id="theme-light-btn" class="font-medium transition text-neutral-500 hover:text-neutral-900">LIGHT</button>
-                </div>
-
-                <!-- JP / EN 言語切り替え -->
-                <div class="flex space-x-2 text-xs tracking-wider">
-                    <button id="btn-ja" onclick="setLanguage('ja')" class="text-white border-b border-white pb-0.5 transition font-medium">JP</button>
-                    <span class="text-neutral-600">/</span>
-                    <button id="btn-en" onclick="setLanguage('en')" class="text-neutral-500 hover:text-white transition font-medium">EN</button>
-                </div>
+        <!-- ヘッダー / 言語切り替えのみ（右寄せ） -->
+        <header class="w-full max-w-5xl mx-auto px-6 pt-8 md:pt-12 flex justify-end items-center">
+            <div class="flex space-x-2 text-xs tracking-wider">
+                <button id="btn-ja" onclick="setLanguage('ja')" class="text-white border-b border-white pb-0.5 transition font-medium">JP</button>
+                <span class="text-neutral-600">/</span>
+                <button id="btn-en" onclick="setLanguage('en')" class="text-neutral-500 hover:text-white transition font-medium">EN</button>
             </div>
         </header>
 
-        <!-- メインコンテンツ -->
-        <main class="w-full max-w-xl mx-auto px-6 py-12 flex-grow flex flex-col justify-center">
+        <!-- メインコンテンツ (PC: 2カラム左詰め / スマホ: 1カラム) -->
+        <main class="w-full max-w-5xl mx-auto px-6 py-8 md:py-12 flex-grow">
             
-            <!-- アーティスト メイン画像（前面：スクエア比率 ＆ 上部基準で下部をクロップ） -->
-            <div class="mb-10 w-full aspect-square overflow-hidden rounded-lg shadow-2xl border border-white/10 dark:border-white/10">
-                <img 
-                    src="img/main-artist.jpg" 
-                    alt="Dan Kubo / 1e1" 
-                    class="w-full h-full object-cover object-[center_top]" 
-                    loading="eager"
-                >
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 items-start">
+                
+                <!-- 【PC】左側 / 【スマホ】上・下分割（名前 → アー写 → 本文の順に表示制御） -->
+                <div class="md:col-span-7 flex flex-col text-left">
+                    
+                    <!-- 1. アーティスト名 & 肩書（スマホ・PCともに一番上） -->
+                    <section class="mb-6 md:mb-8">
+                        <h1 class="text-3xl md:text-5xl font-light tracking-tight text-white mb-2">
+                            Dan Kubo <span class="text-neutral-500 font-extralight">/ 1e1</span>
+                        </h1>
+                        <p class="text-sm md:text-base text-neutral-400 font-light tracking-wide">
+                            Artist / Composer / Producer
+                        </p>
+                    </section>
+
+                    <!-- 2. スマホのみ表示されるアー写（PCでは非表示） -->
+                    <div class="block md:hidden mb-8 w-full aspect-square overflow-hidden rounded-lg shadow-2xl border border-white/10">
+                        <img 
+                            src="img/main-artist.jpg" 
+                            alt="Dan Kubo / 1e1" 
+                            class="w-full h-full object-cover object-[center_top]" 
+                            loading="eager"
+                        >
+                    </div>
+
+                    <!-- 3. プロフィール文章 -->
+                    <section class="mb-10">
+                        <!-- 日本語プロフ -->
+                        <div id="prof-ja" class="space-y-4 text-neutral-300 text-sm md:text-base leading-relaxed font-light">
+                            <p>1e1（イェル）は東京を中心に活動する音楽家・プロデューサーの久保暖によるソロプロジェクト。HipHop・R&Bを中心としたブラックミュージックに、現代音楽の一分野とされる電子音響音楽における独自の作曲手法を用いた音を織り交ぜた音楽を生み出す。</p>
+                            <p>2018年10月31日に1st EP 「Quartier Latin」をリリース。各リリースは数多くのアーティストから支持を受け、2020年10月にリリースした1st album「Cryptobiosis」は、Webメディア『Mastered』にてSeihoが選ぶ当該年レコード大賞にノミネート。</p>
+                            <p>その活動は楽曲制作にとどまらず、グラフィックやインスタレーションを主としたアート分野での制作も行なっており、Licaxxx、Kazuki Muraokaらとの共同制作も行なっている。</p>
+                            <p>2024年8月14日、2nd EP「Asymptote」をリリース。</p>
+                        </div>
+
+                        <!-- 英語プロフ (初期状態は非表示) -->
+                        <div id="prof-en" class="space-y-4 text-neutral-300 text-sm md:text-base leading-relaxed font-light hidden">
+                            <p>1e1 (pronounced "jəl") is a solo project by Dan Kubo, a musician and producer based in Tokyo. He creates music that combines mainly hip-hop and R&B, with sounds that use his own compositional techniques in acousmatic music, which is considered a branch of contemporary music.</p>
+                            <p>He released his first EP, "Quartier Latin," on October 31, 2018. Each release has been supported by many artists, and his first album, "Cryptobiosis," released in October 2020, was nominated for the Record of the Year Award selected by Seiho on the web media "Mastered."</p>
+                            <p>His activities are not limited to music production, but also include production in the art field, mainly graphics and installations, and he has collaborated with Licaxxx, Kazuki Muraoka, and others.</p>
+                            <p>He released his second EP, "Asymptote," on August 14, 2024.</p>
+                        </div>
+                    </section>
+
+                    <!-- 4. リンクエリア（サブスク & SNS） -->
+                    <section class="space-y-6">
+                        <!-- 音楽配信サービス -->
+                        <div>
+                            <h2 class="text-xs uppercase tracking-widest text-neutral-500 mb-3 font-semibold">Listen</h2>
+                            <div class="flex flex-wrap gap-2.5">
+                                <a href="https://open.spotify.com/intl-ja/artist/2aKWnM6NmN58zpZmKegKo4" target="_blank" rel="noopener noreferrer" class="flex items-center space-x-2 bg-neutral-900/80 backdrop-blur border border-neutral-800 hover:border-neutral-600 px-3.5 py-2 rounded-full text-xs text-neutral-300 hover:text-white transition shadow-sm">
+                                    <i class="fa-brands fa-spotify text-sm text-emerald-500"></i>
+                                    <span>Spotify</span>
+                                </a>
+                                <a href="https://music.apple.com/jp/artist/1e1/1440595120" target="_blank" rel="noopener noreferrer" class="flex items-center space-x-2 bg-neutral-900/80 backdrop-blur border border-neutral-800 hover:border-neutral-600 px-3.5 py-2 rounded-full text-xs text-neutral-300 hover:text-white transition shadow-sm">
+                                    <i class="fa-brands fa-apple text-sm text-pink-500"></i>
+                                    <span>Apple Music</span>
+                                </a>
+                                <a href="https://linkco.re/3GSQPAmr?lang=en" target="_blank" rel="noopener noreferrer" class="flex items-center space-x-2 bg-neutral-900/80 backdrop-blur border border-neutral-800 hover:border-neutral-600 px-3.5 py-2 rounded-full text-xs text-neutral-300 hover:text-white transition shadow-sm">
+                                    <i class="fa-solid fa-music text-sm text-neutral-500"></i>
+                                    <span>Other Streaming Services</span>
+                                </a>
+                                <a href="https://soundcloud.com/dankubo" target="_blank" rel="noopener noreferrer" class="flex items-center space-x-2 bg-neutral-900/80 backdrop-blur border border-neutral-800 hover:border-neutral-600 px-3.5 py-2 rounded-full text-xs text-neutral-300 hover:text-white transition shadow-sm">
+                                    <i class="fa-brands fa-soundcloud text-sm text-orange-500"></i>
+                                    <span>SoundCloud</span>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- SNSリンク -->
+                        <div>
+                            <h2 class="text-xs uppercase tracking-widest text-neutral-500 mb-3 font-semibold">Social</h2>
+                            <div class="flex items-center space-x-5">
+                                <a href="https://www.instagram.com/dan1e1/" target="_blank" rel="noopener noreferrer" class="text-neutral-400 hover:text-white text-lg transition" title="Instagram">
+                                    <i class="fa-brands fa-instagram"></i>
+                                </a>
+                                <a href="https://x.com/KuboDan" target="_blank" rel="noopener noreferrer" class="text-neutral-400 hover:text-white text-lg transition" title="X (Twitter)">
+                                    <i class="fa-brands fa-x-twitter"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </section>
+
+                </div>
+
+                <!-- 【PCのみ表示】右側のアー写（右上配置・スクエア＆下20%クロップ） -->
+                <div class="hidden md:block md:col-span-5 sticky top-12">
+                    <div class="w-full aspect-square overflow-hidden rounded-lg shadow-2xl border border-white/10">
+                        <img 
+                            src="img/main-artist.jpg" 
+                            alt="Dan Kubo / 1e1" 
+                            class="w-full h-full object-cover object-[center_top]" 
+                            loading="eager"
+                        >
+                    </div>
+                </div>
+
             </div>
-
-            <!-- 名前 & タイトル -->
-            <section class="mb-10">
-                <h1 class="text-3xl md:text-5xl font-light tracking-tight text-neutral-900 dark:text-white mb-2">
-                    Dan Kubo <span class="text-neutral-500 font-extralight">/ 1e1</span>
-                </h1>
-                <p class="text-sm md:text-base text-neutral-600 dark:text-neutral-400 font-light tracking-wide">
-                    Artist / Composer / Producer
-                </p>
-            </section>
-
-            <!-- プロフィール文章 -->
-            <section class="mb-12">
-                <!-- 日本語プロフ -->
-                <div id="prof-ja" class="space-y-4 text-neutral-700 dark:text-neutral-300 text-sm md:text-base leading-relaxed font-light">
-                    <p>1e1（イェル）は東京を中心に活動する音楽家・プロデューサーの久保暖によるソロプロジェクト。HipHop・R&Bを中心としたブラックミュージックに、現代音楽の一分野とされる電子音響音楽における独自の作曲手法を用いた音を織り交ぜた音楽を生み出す。</p>
-                    <p>2018年10月31日に1st EP 「Quartier Latin」をリリース。各リリースは数多くのアーティストから支持を受け、2020年10月にリリースした1st album「Cryptobiosis」は、Webメディア『Mastered』にてSeihoが選ぶ当該年レコード大賞にノミネート。</p>
-                    <p>その活動は楽曲制作にとどまらず、グラフィックやインスタレーションを主としたアート分野での制作も行なっており、Licaxxx、Kazuki Muraokaらとの共同制作も行なっている。</p>
-                    <p>2024年8月14日、2nd EP「Asymptote」をリリース。</p>
-                </div>
-
-                <!-- 英語プロフ (初期状態は非表示) -->
-                <div id="prof-en" class="space-y-4 text-neutral-700 dark:text-neutral-300 text-sm md:text-base leading-relaxed font-light hidden">
-                    <p>1e1 (pronounced "jəl") is a solo project by Dan Kubo, a musician and producer based in Tokyo. He creates music that combines mainly hip-hop and R&B, with sounds that use his own compositional techniques in acousmatic music, which is considered a branch of contemporary music.</p>
-                    <p>He released his first EP, "Quartier Latin," on October 31, 2018. Each release has been supported by many artists, and his first album, "Cryptobiosis," released in October 2020, was nominated for the Record of the Year Award selected by Seiho on the web media "Mastered."</p>
-                    <p>His activities are not limited to music production, but also include production in the art field, mainly graphics and installations, and he has collaborated with Licaxxx, Kazuki Muraoka, and others.</p>
-                    <p>He released his second EP, "Asymptote," on August 14, 2024.</p>
-                </div>
-            </section>
-
-            <!-- リンクエリア（サブスク & SNS） -->
-            <section class="space-y-8">
-                <!-- 音楽配信サービス -->
-                <div>
-                    <h2 class="text-xs uppercase tracking-widest text-neutral-500 mb-4 font-semibold">Listen</h2>
-                    <div class="flex flex-wrap gap-3">
-                        <!-- 1. Spotify -->
-                        <a href="https://open.spotify.com/intl-ja/artist/2aKWnM6NmN58zpZmKegKo4" target="_blank" rel="noopener noreferrer" class="flex items-center space-x-2 bg-white/80 dark:bg-neutral-900/80 backdrop-blur border border-neutral-300 dark:border-neutral-800 hover:border-neutral-500 dark:hover:border-neutral-600 px-4 py-2.5 rounded-full text-xs text-neutral-800 dark:text-neutral-300 hover:text-black dark:hover:text-white transition shadow-sm">
-                            <i class="fa-brands fa-spotify text-base text-emerald-500"></i>
-                            <span>Spotify</span>
-                        </a>
-                        <!-- 2. Apple Music -->
-                        <a href="https://music.apple.com/jp/artist/1e1/1440595120" target="_blank" rel="noopener noreferrer" class="flex items-center space-x-2 bg-white/80 dark:bg-neutral-900/80 backdrop-blur border border-neutral-300 dark:border-neutral-800 hover:border-neutral-500 dark:hover:border-neutral-600 px-4 py-2.5 rounded-full text-xs text-neutral-800 dark:text-neutral-300 hover:text-black dark:hover:text-white transition shadow-sm">
-                            <i class="fa-brands fa-apple text-base text-pink-500"></i>
-                            <span>Apple Music</span>
-                        </a>
-                        <!-- 3. Other Streaming Services -->
-                        <a href="https://linkco.re/3GSQPAmr?lang=en" target="_blank" rel="noopener noreferrer" class="flex items-center space-x-2 bg-white/80 dark:bg-neutral-900/80 backdrop-blur border border-neutral-300 dark:border-neutral-800 hover:border-neutral-500 dark:hover:border-neutral-600 px-4 py-2.5 rounded-full text-xs text-neutral-800 dark:text-neutral-300 hover:text-black dark:hover:text-white transition shadow-sm">
-                            <i class="fa-solid fa-music text-base text-neutral-500"></i>
-                            <span>Other Streaming Services</span>
-                        </a>
-                        <!-- 4. SoundCloud -->
-                        <a href="https://soundcloud.com/dankubo" target="_blank" rel="noopener noreferrer" class="flex items-center space-x-2 bg-white/80 dark:bg-neutral-900/80 backdrop-blur border border-neutral-300 dark:border-neutral-800 hover:border-neutral-500 dark:hover:border-neutral-600 px-4 py-2.5 rounded-full text-xs text-neutral-800 dark:text-neutral-300 hover:text-black dark:hover:text-white transition shadow-sm">
-                            <i class="fa-brands fa-soundcloud text-base text-orange-500"></i>
-                            <span>SoundCloud</span>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- SNSリンク -->
-                <div>
-                    <h2 class="text-xs uppercase tracking-widest text-neutral-500 mb-4 font-semibold">Social</h2>
-                    <div class="flex items-center space-x-5">
-                        <!-- 1. Instagram -->
-                        <a href="https://www.instagram.com/dan1e1/" target="_blank" rel="noopener noreferrer" class="text-neutral-600 dark:text-neutral-400 hover:text-black dark:hover:text-white text-xl transition flex items-center justify-center w-6 h-6" title="Instagram">
-                            <i class="fa-brands fa-instagram"></i>
-                        </a>
-                        <!-- 2. X (Twitter) -->
-                        <a href="https://x.com/KuboDan" target="_blank" rel="noopener noreferrer" class="text-neutral-600 dark:text-neutral-400 hover:text-black dark:hover:text-white text-xl transition flex items-center justify-center w-6 h-6" title="X (Twitter)">
-                            <i class="fa-brands fa-x-twitter"></i>
-                        </a>
-                    </div>
-                </div>
-            </section>
 
         </main>
 
-        <!-- フッター & CW（クライアントワーク）パスワード入力領域 -->
-        <footer class="w-full border-t border-neutral-300 dark:border-neutral-900 py-12 px-6 mt-16 backdrop-blur-md">
-            <div class="max-w-3xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+        <!-- フッター & CW認証 -->
+        <footer class="w-full border-t border-neutral-900 py-8 px-6 mt-16 backdrop-blur-md">
+            <div class="max-w-5xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
                 
-                <div class="text-xs text-neutral-500 dark:text-neutral-600">
+                <div class="text-xs text-neutral-600">
                     &copy; Dan Kubo / 1e1. All rights reserved.
                 </div>
 
-                <!-- CWクライアント閲覧用フォーム -->
+                <!-- CW閲覧用フォーム -->
                 <div class="w-full md:w-auto flex flex-col items-center md:items-end">
                     <form id="cw-login-form" onsubmit="handleLogin(event)" class="flex items-center space-x-2">
                         <input 
                             type="password" 
                             id="cw-password" 
                             placeholder="Client Passcode" 
-                            class="bg-white/90 dark:bg-neutral-950 border border-neutral-300 dark:border-neutral-800 text-xs text-neutral-900 dark:text-neutral-200 px-3 py-1.5 rounded focus:outline-none focus:border-neutral-500 dark:focus:border-neutral-600 w-36 transition"
+                            class="bg-neutral-950 border border-neutral-800 text-xs text-neutral-200 px-3 py-1.5 rounded focus:outline-none focus:border-neutral-600 w-36 transition"
                         >
                         <button 
                             type="submit" 
-                            class="bg-neutral-900 dark:bg-neutral-800 hover:bg-neutral-700 text-xs text-white dark:text-neutral-300 px-3 py-1.5 rounded transition"
+                            class="bg-neutral-800 hover:bg-neutral-700 text-xs text-neutral-300 px-3 py-1.5 rounded transition"
                         >
                             Enter
                         </button>
@@ -204,59 +193,16 @@
 
     </div>
 
-    <!-- JavaScript (切り替え・認証ロジック) -->
+    <!-- JavaScript (言語切り替え & 認証ロジック) -->
     <script>
-        // テーマ（Dark / Light）切り替え
-        function toggleTheme(mode) {
-            const body = document.getElementById('body');
-            const darkBtn = document.getElementById('theme-dark-btn');
-            const lightBtn = document.getElementById('theme-light-btn');
-            const btnJa = document.getElementById('btn-ja');
-            const btnEn = document.getElementById('btn-en');
-            const isJaActive = !document.getElementById('prof-ja').classList.contains('hidden');
-
-            if (mode === 'light') {
-                body.classList.remove('dark');
-                body.classList.add('light-mode', 'bg-[#f5f5f5]', 'text-neutral-900');
-                body.classList.remove('bg-[#0a0a0a]');
-                
-                lightBtn.className = "font-medium transition text-neutral-900 border-b border-neutral-900 pb-0.5";
-                darkBtn.className = "font-medium transition text-neutral-500 hover:text-neutral-900";
-
-                if (isJaActive) {
-                    btnJa.className = "text-neutral-900 border-b border-neutral-900 pb-0.5 transition font-medium";
-                    btnEn.className = "text-neutral-500 hover:text-neutral-900 transition font-medium";
-                } else {
-                    btnEn.className = "text-neutral-900 border-b border-neutral-900 pb-0.5 transition font-medium";
-                    btnJa.className = "text-neutral-500 hover:text-neutral-900 transition font-medium";
-                }
-            } else {
-                body.classList.remove('light-mode', 'bg-[#f5f5f5]', 'text-neutral-900');
-                body.classList.add('dark', 'bg-[#0a0a0a]');
-
-                darkBtn.className = "font-medium transition text-white border-b border-white pb-0.5";
-                lightBtn.className = "font-medium transition text-neutral-500 hover:text-white";
-
-                if (isJaActive) {
-                    btnJa.className = "text-white border-b border-white pb-0.5 transition font-medium";
-                    btnEn.className = "text-neutral-500 hover:text-white transition font-medium";
-                } else {
-                    btnEn.className = "text-white border-b border-white pb-0.5 transition font-medium";
-                    btnJa.className = "text-neutral-500 hover:text-white transition font-medium";
-                }
-            }
-        }
-
-        // 言語切り替え処理
         function setLanguage(lang) {
             const profJa = document.getElementById('prof-ja');
             const profEn = document.getElementById('prof-en');
             const btnJa = document.getElementById('btn-ja');
             const btnEn = document.getElementById('btn-en');
-            const isDark = document.getElementById('body').classList.contains('dark');
 
-            const activeClass = isDark ? "text-white border-b border-white pb-0.5 transition font-medium" : "text-neutral-900 border-b border-neutral-900 pb-0.5 transition font-medium";
-            const inactiveClass = isDark ? "text-neutral-500 hover:text-white transition font-medium" : "text-neutral-500 hover:text-neutral-900 transition font-medium";
+            const activeClass = "text-white border-b border-white pb-0.5 transition font-medium";
+            const inactiveClass = "text-neutral-500 hover:text-white transition font-medium";
 
             if (lang === 'en') {
                 profJa.classList.add('hidden');
@@ -271,7 +217,6 @@
             }
         }
 
-        // パスワード認証処理
         function handleLogin(e) {
             e.preventDefault();
             const inputPass = document.getElementById('cw-password').value;
