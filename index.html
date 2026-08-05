@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dan Kubo / 1e1 - Official Website</title>
+    <!-- Tailwind CSS (デザイン用) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome (アイコン用) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Noto+Sans+JP:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', 'Noto Sans JP', sans-serif;
+            background-color: #0a0a0a;
+            color: #e5e5e5;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-neutral-800 selection:text-white">
+
+    <!-- ヘッダー / 言語切り替え -->
+    <header class="w-full max-w-4xl mx-auto px-6 pt-10 flex justify-between items-center">
+        <div class="text-xs tracking-widest uppercase text-neutral-500">Official Web</div>
+        <div class="flex space-x-3 text-xs tracking-wider">
+            <button id="btn-ja" onclick="setLanguage('ja')" class="text-white border-b border-white pb-0.5 transition">JP</button>
+            <span class="text-neutral-600">/</span>
+            <button id="btn-en" onclick="setLanguage('en')" class="text-neutral-500 hover:text-white transition">EN</button>
+        </div>
+    </header>
+
+    <!-- メインコンテンツ -->
+    <main class="w-full max-w-3xl mx-auto px-6 py-12 flex-grow flex flex-col justify-center">
+        
+        <!-- 名前 & タイトル -->
+        <section class="mb-12">
+            <h1 class="text-3xl md:text-5xl font-light tracking-tight text-white mb-2">
+                Dan Kubo <span class="text-neutral-500 font-extralight">/ 1e1</span>
+            </h1>
+            <p class="text-sm md:text-base text-neutral-400 font-light tracking-wide">
+                Artist / Composer / Producer
+            </p>
+        </section>
+
+        <!-- プロフィール文章 -->
+        <section class="mb-12">
+            <!-- 日本語プロフ -->
+            <div id="prof-ja" class="space-y-4 text-neutral-300 text-sm md:text-base leading-relaxed font-light">
+                <p>1e1（イェル）は東京を中心に活動する音楽家・プロデューサーの久保暖によるソロプロジェクト。HipHop・R&Bを中心としたブラックミュージックに、現代音楽の一分野とされる電子音響音楽における独自の作曲手法を用いた音を織り交ぜた音楽を生み出す。</p>
+                <p>2018年10月31日に1st EP 「Quartier Latin」をリリース。各リリースは数多くのアーティストから支持を受け、2020年10月にリリースした1st album「Cryptobiosis」は、Webメディア『Mastered』にてSeihoが選ぶ当該年レコード大賞にノミネート。</p>
+                <p>その活動は楽曲制作にとどまらず、グラフィックやインスタレーションを主としたアート分野での制作も行なっており、Licaxxx、Kazuki Muraokaらとの共同制作も行なっている。</p>
+                <p>2024年8月14日、2nd EP「Asymptote」をリリース。</p>
+            </div>
+
+            <!-- 英語プロフ (初期状態は非表示) -->
+            <div id="prof-en" class="space-y-4 text-neutral-300 text-sm md:text-base leading-relaxed font-light hidden">
+                <p>1e1 (pronounced "jəl") is a solo project by Dan Kubo, a musician and producer based in Tokyo. He creates music that combines mainly hip-hop and R&B, with sounds that use his own compositional techniques in acousmatic music, which is considered a branch of contemporary music.</p>
+                <p>He released his first EP, "Quartier Latin," on October 31, 2018. Each release has been supported by many artists, and his first album, "Cryptobiosis," released in October 2020, was nominated for the Record of the Year Award selected by Seiho on the web media "Mastered."</p>
+                <p>His activities are not limited to music production, but also include production in the art field, mainly graphics and installations, and he has collaborated with Licaxxx, Kazuki Muraoka, and others.</p>
+                <p>He released his second EP, "Asymptote," on August 14, 2024.</p>
+            </div>
+        </section>
+
+        <!-- リンクエリア（サブスク & SNS） -->
+        <section class="space-y-8">
+            <!-- 音楽配信サービス -->
+            <div>
+                <h2 class="text-xs uppercase tracking-widest text-neutral-500 mb-4">Listen</h2>
+                <div class="flex flex-wrap gap-3">
+                    <a href="https://open.spotify.com/intl-ja/artist/2aKWnM6NmN58zpZmKegKo4" target="_blank" rel="noopener noreferrer" class="flex items-center space-x-2 bg-neutral-900 border border-neutral-800 hover:border-neutral-600 px-4 py-2.5 rounded-full text-xs text-neutral-300 hover:text-white transition">
+                        <i class="fa-brands fa-spotify text-base text-emerald-500"></i>
+                        <span>Spotify</span>
+                    </a>
+                    <a href="https://music.apple.com/jp/artist/1e1/1440595120" target="_blank" rel="noopener noreferrer" class="flex items-center space-x-2 bg-neutral-900 border border-neutral-800 hover:border-neutral-600 px-4 py-2.5 rounded-full text-xs text-neutral-300 hover:text-white transition">
+                        <i class="fa-brands fa-apple text-base text-pink-500"></i>
+                        <span>Apple Music</span>
+                    </a>
+                    <a href="https://soundcloud.com/dankubo" target="_blank" rel="noopener noreferrer" class="flex items-center space-x-2 bg-neutral-900 border border-neutral-800 hover:border-neutral-600 px-4 py-2.5 rounded-full text-xs text-neutral-300 hover:text-white transition">
+                        <i class="fa-brands fa-soundcloud text-base text-orange-500"></i>
+                        <span>SoundCloud</span>
+                    </a>
+                    <a href="https://linkco.re/3GSQPAmr?lang=en" target="_blank" rel="noopener noreferrer" class="flex items-center space-x-2 bg-neutral-900 border border-neutral-800 hover:border-neutral-600 px-4 py-2.5 rounded-full text-xs text-neutral-300 hover:text-white transition">
+                        <i class="fa-solid fa-music text-base text-neutral-400"></i>
+                        <span>Other Streaming Services</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- SNSリンク -->
+            <div>
+                <h2 class="text-xs uppercase tracking-widest text-neutral-500 mb-4">Social</h2>
+                <div class="flex space-x-4">
+                    <a href="https://x.com/KuboDan" target="_blank" rel="noopener noreferrer" class="text-neutral-400 hover:text-white text-lg transition" title="X (Twitter)">
+                        <i class="fa-brands fa-x-twitter"></i>
+                    </a>
+                    <a href="https://www.instagram.com/dan1e1/" target="_blank" rel="noopener noreferrer" class="text-neutral-400 hover:text-white text-lg transition" title="Instagram">
+                        <i class="fa-brands fa-instagram"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- フッター & CW（クライアントワーク）パスワード入力領域 -->
+    <footer class="w-full border-t border-neutral-900 py-12 px-6 mt-16">
+        <div class="max-w-3xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+            
+            <div class="text-xs text-neutral-600">
+                &copy; Dan Kubo / 1e1. All rights reserved.
+            </div>
+
+            <!-- CWクライアント閲覧用フォーム -->
+            <div class="w-full md:w-auto flex flex-col items-center md:items-end">
+                <form id="cw-login-form" onsubmit="handleLogin(event)" class="flex items-center space-x-2">
+                    <input 
+                        type="password" 
+                        id="cw-password" 
+                        placeholder="Client Passcode" 
+                        class="bg-neutral-950 border border-neutral-800 text-xs text-neutral-200 px-3 py-1.5 rounded focus:outline-none focus:border-neutral-600 w-36 transition"
+                    >
+                    <button 
+                        type="submit" 
+                        class="bg-neutral-800 hover:bg-neutral-700 text-xs text-neutral-300 px-3 py-1.5 rounded transition"
+                    >
+                        Enter
+                    </button>
+                </form>
+                <p id="error-msg" class="text-[10px] text-red-500 mt-1 hidden">Passcode is incorrect.</p>
+            </div>
+
+        </div>
+    </footer>
+
+    <!-- JavaScript (切り替え・認証ロジック) -->
+    <script>
+        // 言語切り替え処理
+        function setLanguage(lang) {
+            const profJa = document.getElementById('prof-ja');
+            const profEn = document.getElementById('prof-en');
+            const btnJa = document.getElementById('btn-ja');
+            const btnEn = document.getElementById('btn-en');
+
+            if (lang === 'en') {
+                profJa.classList.add('hidden');
+                profEn.classList.remove('hidden');
+                btnEn.className = "text-white border-b border-white pb-0.5 transition";
+                btnJa.className = "text-neutral-500 hover:text-white transition";
+            } else {
+                profEn.classList.add('hidden');
+                profJa.classList.remove('hidden');
+                btnJa.className = "text-white border-b border-white pb-0.5 transition";
+                btnEn.className = "text-neutral-500 hover:text-white transition";
+            }
+        }
+
+        // パスワード認証処理
+        function handleLogin(e) {
+            e.preventDefault();
+            const inputPass = document.getElementById('cw-password').value;
+            const errorMsg = document.getElementById('error-msg');
+
+            // 閲覧用パスワード
+            const targetPass = "dkcw2026"; 
+
+            if (inputPass === targetPass) {
+                sessionStorage.setItem('cw_auth', 'true');
+                window.location.href = 'portfolio.html';
+            } else {
+                errorMsg.classList.remove('hidden');
+            }
+        }
+    </script>
+</body>
+</html>
