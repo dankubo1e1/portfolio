@@ -34,12 +34,6 @@
             backdrop-filter: blur(24px);
             -webkit-backdrop-filter: blur(24px);
         }
-
-        /* 透過グラデーションマスク（アー写周りの馴染ませ用） */
-        .img-blend-mask {
-            mask-image: radial-gradient(circle at center, black 60%, transparent 100%);
-            -webkit-mask-image: radial-gradient(circle at center, black 60%, transparent 100%);
-        }
     </style>
 </head>
 <body class="dark bg-[#0a0a0a] text-neutral-200 min-h-screen flex flex-col justify-between selection:bg-neutral-800 selection:text-white relative overflow-x-hidden">
@@ -56,7 +50,7 @@
 
         <!-- ヘッダー / 言語切り替えのみ（右寄せ） -->
         <header class="w-full max-w-5xl mx-auto px-6 pt-8 md:pt-12 flex justify-end items-center relative z-40">
-            <div class="flex space-x-2 text-xs tracking-wider bg-[#0a0a0a]/40 backdrop-blur-sm px-3 py-1.5 rounded-full border border-white/5">
+            <div class="flex space-x-2 text-xs tracking-wider bg-neutral-900/40 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/5">
                 <button id="btn-ja" onclick="setLanguage('ja')" class="text-white border-b border-white pb-0.5 transition font-medium">JP</button>
                 <span class="text-neutral-600">/</span>
                 <button id="btn-en" onclick="setLanguage('en')" class="text-neutral-500 hover:text-white transition font-medium">EN</button>
@@ -66,12 +60,12 @@
         <!-- メインコンテンツ -->
         <main class="w-full max-w-5xl mx-auto px-6 py-4 md:py-8 flex-grow">
             
-            <!-- 1. アーティスト名 & 肩書（スクロール時に上部へブラーフロート固定） -->
-            <div class="sticky top-0 z-30 bg-[#0a0a0a]/70 backdrop-blur-xl pt-4 pb-4 mb-6 md:mb-8 -mx-6 px-6 border-b border-white/5 transition-all">
-                <h1 class="text-3xl md:text-5xl font-light tracking-tight text-white mb-2">
+            <!-- 1. アーティスト名 & 肩書（黒背景を完全排除し背景と完全同化） -->
+            <div class="sticky top-0 z-30 pt-4 pb-4 mb-6 md:mb-8 bg-transparent backdrop-blur-md">
+                <h1 class="text-3xl md:text-5xl font-light tracking-tight text-white mb-2 drop-shadow-md">
                     Dan Kubo <span class="text-neutral-500 font-extralight">/ 1e1</span>
                 </h1>
-                <p class="text-sm md:text-base text-neutral-400 font-light tracking-wide">
+                <p class="text-sm md:text-base text-neutral-400 font-light tracking-wide drop-shadow">
                     Artist / Composer / Producer
                 </p>
             </div>
@@ -82,7 +76,7 @@
                 <!-- 左側：スマホ用アー写 ＋ プロフィール本文 ＋ リンク -->
                 <div class="md:col-span-7 flex flex-col text-left">
                     
-                    <!-- スマホのみ表示されるアー写（黒枠削除・背景透過マスク適用） -->
+                    <!-- スマホのみ表示されるアー写 -->
                     <div class="block md:hidden mb-8 w-full aspect-square overflow-hidden rounded-2xl relative">
                         <img 
                             src="img/main-artist.jpg" 
@@ -152,12 +146,10 @@
 
                 </div>
 
-                <!-- 右側：PC用アー写（背景透過＆ブラーで背景画像と自然に融合） -->
+                <!-- 右側：PC用アー写 -->
                 <div class="hidden md:block md:col-span-5 sticky top-32">
                     <div class="w-full aspect-square overflow-hidden rounded-2xl relative group">
-                        <!-- アー写背景のぼかしグロー効果 -->
                         <div class="absolute inset-0 bg-neutral-500/10 backdrop-blur-md rounded-2xl"></div>
-                        <!-- メイン画像（透過描画） -->
                         <img 
                             src="img/main-artist.jpg" 
                             alt="Dan Kubo / 1e1" 
